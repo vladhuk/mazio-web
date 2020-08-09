@@ -1,0 +1,12 @@
+$shape-length: 50px;
+
+$shape-before-top-offset: 1px; 
+$shape-before-left-offset: 6px; 
+
+$transition: 0.08s;
+
+%before-shape {
+  display: block;
+  content: '';
+  position: relative;
+}

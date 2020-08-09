@@ -1,0 +1,59 @@
+@import '../index.scss';
+
+$cell-border-radius: 10%;
+
+@mixin get-cell-size($length) {
+  width: $length;
+  height: $length;
+}
+
+@mixin align-cell($offset) {
+  top: $offset - $shape-before-top-offset;
+  left: $offset - $shape-before-left-offset;
+}
+
+.cell {
+  @include get-cell-size($shape-length);
+
+  border: none;
+  border-radius: $cell-border-radius;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 2px;
+}
+
+.cell::before {
+  @extend %before-shape;
+
+  @include get-cell-size($shape-length);
+  @include align-cell(0);
+
+  background: #f3f3f3;
+  border: 2px solid #411f1f;
+  border-radius: $cell-border-radius;
+  transition: $transition;
+}
+
+.cell:hover::before {
+  $length-diff: 10px;
+
+  @include get-cell-size($shape-length + $length-diff);
+  @include align-cell($length-diff / 3);
+
+  transition: $transition;
+  z-index: 2;
+}
+
+.cell:focus {
+  outline: none;
+}
+
+.cell:focus::before {
+  $length-diff: 20px;
+
+  @include get-cell-size($shape-length + $length-diff);
+  @include align-cell(-$length-diff / 2);
+
+  border-width: 3px;
+  transition: $transition;
+  z-index: 3;
+}
