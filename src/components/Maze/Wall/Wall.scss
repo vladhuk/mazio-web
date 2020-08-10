@@ -1,0 +1,86 @@
+@import '../Maze.scss';
+
+$wall-border-radius: 15%;
+$height-width-factor: 0.2;
+$wall-width: $shape-length * $height-width-factor;
+
+@mixin get-wall-size($posiiton, $scale-factor) {
+  @if $posiiton == h {
+    width: $shape-length * $scale-factor;
+    height: $wall-width * $scale-factor;
+  } @else if $posiiton == v {
+    width: $wall-width * $scale-factor;
+    height: $shape-length * $scale-factor;
+  }
+}
+
+@mixin align-wall($offset) {
+  @include align-shape($offset - 0px);
+}
+
+.wall {
+  border-radius: $wall-border-radius;
+}
+
+.wall-v, .wall-h {
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+}
+
+.wall-v::before, .wall-h::before {
+  @extend %before-shape; 
+  
+  @include align-wall(0);
+
+  background: #cedebd;
+  border: 1px solid #411f1f;
+}
+
+.wall-v, .wall-v::before {
+  @include get-wall-size(v, 1);
+}
+
+.wall-h, .wall-h::before {
+  @include get-wall-size(h, 1);
+}
+
+.wall-v {
+  margin-top: $margin;
+}
+
+.wall-h {
+  margin-left: $wall-width + $margin;
+  margin-right: $margin;
+}
+
+.wall-v:hover::before {
+  $length-diff: 10px;
+
+  @include get-wall-size(v, 1.5);
+  @include align-wall(-$shape-length * 1.5 / 2 + $shape-length);
+}
+
+.wall-v:focus::before {
+  $length-diff: 20px;
+
+  @include get-wall-size(v, 2);
+  @include align-wall(-$length-diff / 2);
+  
+  border-width: 2px;
+}
+
+.wall-h:hover::before {
+  $length-diff: 10px;
+
+  @include get-wall-size(h, 1.5);
+  @include align-wall(-$length-diff / 2);
+}
+
+.wall-h:focus::before {
+  $length-diff: 20px;
+
+  @include get-wall-size(h, 2);
+  @include align-wall(-$length-diff / 2);
+
+  border-width: 2px;
+}
