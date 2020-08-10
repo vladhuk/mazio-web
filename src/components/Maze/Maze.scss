@@ -1,12 +1,30 @@
 $shape-length: 50px;
-
-$shape-before-top-offset: 1px; 
-$shape-before-left-offset: 6px; 
-
-$transition: 0.08s;
+$margin: 2px;
 
 %before-shape {
   display: block;
   content: '';
   position: relative;
+}
+
+@mixin align-shape($offset) {
+  top: $offset;
+  left: $offset;
+}
+
+.maze button {
+  padding: 0;
+  transition: 0.08s;
+}
+
+.maze button:hover::before {
+  z-index: 1;
+}
+
+.maze button:focus::before {
+  z-index: 2;
+}
+
+.maze button:focus {
+  outline: none;
 }
