@@ -1,11 +1,7 @@
 @import '../Maze.scss';
 
-$cell-border-radius: 10%;
-
-// @mixin get-cell-size($length) {
-//   width: $length;
-//   height: $length;
-// }
+$hover-scale-factor: 1.2;
+$focus-scale-factor: 1.4;
 
 @mixin get-cell-size($scale-factor) {
   $width: $shape-length * $scale-factor;
@@ -19,7 +15,7 @@ $cell-border-radius: 10%;
 
 .cell, .cell::before {
   @include get-cell-size(1);
-  border-radius: $cell-border-radius;
+  border-radius: 10%;
 }
 
 .cell {
@@ -36,11 +32,11 @@ $cell-border-radius: 10%;
 }
 
 .cell:hover::before {
-  @include get-cell-size(1.2);
+  @include get-cell-size($hover-scale-factor);
 }
 
 .cell:focus::before {
-  @include get-cell-size(1.4);
+  @include get-cell-size($focus-scale-factor);
 
   border-width: 3px;
 }

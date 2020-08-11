@@ -1,8 +1,9 @@
 @import '../Maze.scss';
 
-$wall-border-radius: 15%;
-$height-width-factor: 0.2;
-$wall-width: $shape-length * $height-width-factor;
+$hover-scale-factor: 1.2;
+$focus-scale-factor: 1.5;
+$length-width-scale-factor: 0.2;
+$wall-width: $shape-length * $length-width-scale-factor;
 
 @mixin get-wall-size($posiiton, $scale-factor) {
   $length: $shape-length * $scale-factor;
@@ -23,20 +24,17 @@ $wall-width: $shape-length * $height-width-factor;
   }
 }
 
-.wall, .wall::before {
-  border-radius: $wall-border-radius;
-}
-
-.wall-v, .wall-h {
-  background: rgba(0, 0, 0, 0.7);
+.wall {
+  background: rgba(0, 0, 0, 0.1);
   border: none;
 }
 
-.wall-v::before, .wall-h::before {
+.wall::before {
   @extend %before-shape; 
   
   background: #cedebd;
   border: 1px solid #411f1f;
+  border-radius: 15%;
 }
 
 .wall-v, .wall-v::before {
@@ -61,17 +59,17 @@ $wall-width: $shape-length * $height-width-factor;
 }
 
 .wall-v:hover::before {
-  @include get-wall-size(v, 1.2);
+  @include get-wall-size(v, $hover-scale-factor);
 }
 
 .wall-v:focus::before {
-  @include get-wall-size(v, 1.5);
+  @include get-wall-size(v, $focus-scale-factor);
 }
 
 .wall-h:hover::before {
-  @include get-wall-size(h, 1.2);
+  @include get-wall-size(h, $hover-scale-factor);
 }
 
 .wall-h:focus::before {
-  @include get-wall-size(h, 1.5);
+  @include get-wall-size(h, $focus-scale-factor);
 }
