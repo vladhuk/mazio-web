@@ -2,13 +2,23 @@
 
 $cell-border-radius: 10%;
 
-@mixin get-cell-size($length) {
-  width: $length;
-  height: $length;
+// @mixin get-cell-size($length) {
+//   width: $length;
+//   height: $length;
+// }
+
+@mixin get-cell-size($scale-factor) {
+  $width: $shape-length * $scale-factor;
+  $offset: ($width - $shape-length) / 2;
+  
+  width: $width;
+  height: $width;
+  top: -$offset;
+  left: -$offset;
 }
 
 .cell, .cell::before {
-  @include get-cell-size($shape-length);
+  @include get-cell-size(1);
   border-radius: $cell-border-radius;
 }
 
@@ -21,24 +31,16 @@ $cell-border-radius: 10%;
 .cell::before {
   @extend %before-shape;
 
-  @include align-shape(0);
-
   background: #f3f3f3;
   border: 2px solid #411f1f;
 }
 
 .cell:hover::before {
-  $length-diff: 10px;
-
-  @include get-cell-size($shape-length + $length-diff);
-  @include align-shape(-$length-diff / 2);
+  @include get-cell-size(1.2);
 }
 
 .cell:focus::before {
-  $length-diff: 20px;
-
-  @include get-cell-size($shape-length + $length-diff);
-  @include align-shape(-$length-diff / 2);
+  @include get-cell-size(1.4);
 
   border-width: 3px;
 }

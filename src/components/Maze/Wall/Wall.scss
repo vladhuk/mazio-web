@@ -5,20 +5,25 @@ $height-width-factor: 0.2;
 $wall-width: $shape-length * $height-width-factor;
 
 @mixin get-wall-size($posiiton, $scale-factor) {
+  $length: $shape-length * $scale-factor;
+  $width: $wall-width * $scale-factor;
+  $length-offset: ($length - $shape-length) / 2;
+  $width-offset: ($width - $wall-width) / 2;
+  
   @if $posiiton == h {
-    width: $shape-length * $scale-factor;
-    height: $wall-width * $scale-factor;
+    width: $length;
+    height: $width;
+    top: -$width-offset;
+    left: -$length-offset;
   } @else if $posiiton == v {
-    width: $wall-width * $scale-factor;
-    height: $shape-length * $scale-factor;
+    width: $width;
+    height: $length;
+    top: -$length-offset;
+    left: -$width-offset;
   }
 }
 
-@mixin align-wall($offset) {
-  @include align-shape($offset - 0px);
-}
-
-.wall {
+.wall, .wall::before {
   border-radius: $wall-border-radius;
 }
 
@@ -30,8 +35,6 @@ $wall-width: $shape-length * $height-width-factor;
 .wall-v::before, .wall-h::before {
   @extend %before-shape; 
   
-  @include align-wall(0);
-
   background: #cedebd;
   border: 1px solid #411f1f;
 }
@@ -53,34 +56,22 @@ $wall-width: $shape-length * $height-width-factor;
   margin-right: $margin;
 }
 
-.wall-v:hover::before {
-  $length-diff: 10px;
+.wall:focus::before {
+  border-width: 2px;
+}
 
-  @include get-wall-size(v, 1.5);
-  @include align-wall(-$shape-length * 1.5 / 2 + $shape-length);
+.wall-v:hover::before {
+  @include get-wall-size(v, 1.2);
 }
 
 .wall-v:focus::before {
-  $length-diff: 20px;
-
-  @include get-wall-size(v, 2);
-  @include align-wall(-$length-diff / 2);
-  
-  border-width: 2px;
+  @include get-wall-size(v, 1.5);
 }
 
 .wall-h:hover::before {
-  $length-diff: 10px;
-
-  @include get-wall-size(h, 1.5);
-  @include align-wall(-$length-diff / 2);
+  @include get-wall-size(h, 1.2);
 }
 
 .wall-h:focus::before {
-  $length-diff: 20px;
-
-  @include get-wall-size(h, 2);
-  @include align-wall(-$length-diff / 2);
-
-  border-width: 2px;
+  @include get-wall-size(h, 1.5);
 }

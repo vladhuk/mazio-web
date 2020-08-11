@@ -7,14 +7,16 @@ $margin: 2px;
   position: relative;
 }
 
-@mixin align-shape($offset) {
-  top: $offset;
-  left: $offset;
-}
-
 .maze button {
   padding: 0;
-  transition: 0.08s;
+}
+
+.maze {
+  button::before,
+  button:hover::before,
+  button:focus::before {
+    transition: 0.08s;
+  }
 }
 
 .maze button:hover::before {
