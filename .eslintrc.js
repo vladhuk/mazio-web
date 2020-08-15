@@ -7,6 +7,7 @@ module.exports = {
 
   extends: [
     'airbnb',
+    'airbnb/hooks',
     'plugin:@typescript-eslint/eslint-recommended', // Disable base rules
     'plugin:@typescript-eslint/recommended', // Enable ts rules
     'prettier',
