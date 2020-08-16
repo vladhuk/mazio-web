@@ -39,6 +39,7 @@ module.exports = {
       },
     ],
     'import/order': WARN,
+    'import/prefer-default-export': WARN,
 
     'react/jsx-filename-extension': OFF,
   },
