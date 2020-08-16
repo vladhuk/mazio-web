@@ -25,15 +25,14 @@ $wall-width: $shape-length * $length-width-scale-factor;
 }
 
 .wall {
-  background: rgba(0, 0, 0, 0.1);
+  background: none;
   border: none;
 }
 
 .wall::before {
   @extend %before-shape; 
   
-  background: #cedebd;
-  border: 1px solid #411f1f;
+  border: 1px solid black;
   border-radius: 15%;
 }
 
@@ -72,4 +71,37 @@ $wall-width: $shape-length * $length-width-scale-factor;
 
 .wall-h:focus::before {
   @include get-wall-size(h, $focus-scale-factor);
+}
+
+/* ************************************************ */
+/*                     Wall types                   */
+/* ************************************************ */
+
+.wall-none {
+  cursor: default!important;
+}
+
+.wall-none::before {
+  display: none;
+}
+
+.wall-stone:before {
+  background: #ffbd69;
+}
+
+.wall-output:before {
+  background: #69ff8c;
+  border: none;
+}
+
+.wall-rubber:before {
+  background: #ff69ee;
+}
+
+.wall-translucent:before {
+  background: #69dcff;
+}
+
+.wall-external:before {
+  background: #c70039;
 }
