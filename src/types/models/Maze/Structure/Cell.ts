@@ -1,4 +1,4 @@
-import Location from './Location';
+import { Location } from './Location';
 
 export enum CellType {
   ARSENAL = 'ARSENAL',
@@ -12,9 +12,12 @@ export enum CellType {
   TRAP = 'TRAP',
   PIT_IN = 'PIT_IN',
   PIT_OUT = 'PIT_OUT',
+
+  /* Does not exist in server model */
+  NONE = 'NONE',
 }
 
-export default interface Cell {
+export interface Cell {
   location: Location;
   ref?: Location;
   type: CellType;

@@ -1,6 +1,6 @@
 import User from '../User';
-import Info from './Info';
-import Structure from './Structure/Structure';
+import { Info } from '.';
+import Structure from './Structure';
 
 export enum Type {
   DRAFT = 'DRAFT',

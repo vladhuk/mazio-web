@@ -1,6 +1,4 @@
-import Size from './Size';
-import Wall from './Wall';
-import Cell from './Cell';
+import { Size, Wall, Cell } from '.';
 
 export default interface Structure {
   size: Size;

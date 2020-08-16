@@ -1,4 +1,4 @@
-export default interface Location {
+export interface Location {
   x: number;
   y: number;
 }

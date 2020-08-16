@@ -1,21 +1,17 @@
-import Location from './Location';
-
-export enum Direction {
-  TOP = 'TOP',
-  BOTTOM = 'BOTTOM',
-  RIGHT = 'RIGHT',
-  LEFT = 'LEFT',
-}
+import { Location } from './Location';
 
 export enum WallType {
-  DEFAULT = 'DEFAULT',
+  STONE = 'STONE',
   RUBBER = 'RUBBER',
   TRANSLUCENT = 'TRANSLUCENT',
   OUTPUT = 'OUTPUT',
+
+  /* Does not exist in server model */
+  NONE = 'NONE',
+  EXTERNAL = 'EXTERNAL',
 }
 
-export default interface IWall {
+export interface Wall {
   location: Location;
-  direction: Direction;
   type: WallType;
 }
