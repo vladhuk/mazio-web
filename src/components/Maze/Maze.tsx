@@ -5,15 +5,11 @@ import { Row, Container } from 'react-bootstrap';
 import Cell from './Cell';
 import Wall from './Wall';
 import { WallPosition } from './Wall/Wall';
+import Structure, { WallType } from '../../types/models/Maze/Structure';
 
-interface Props {
-  size: {
-    height: number;
-    width: number;
-  };
-}
+type Props = Structure;
 
-const Maze: FunctionComponent<Props> = ({ size }: Props) => {
+const Maze: FunctionComponent<Props> = ({ size, walls, cells }: Props) => {
   const horizontalArr = Array(size.height).fill(null);
   const verticalArr = Array(size.width).fill(null);
 
@@ -21,26 +17,36 @@ const Maze: FunctionComponent<Props> = ({ size }: Props) => {
     <Container className="maze">
       <Row>
         {horizontalArr.map(() => {
-          return <Wall position={WallPosition.HORIZONTAL} />;
+          return (
+            <Wall position={WallPosition.HORIZONTAL} type={WallType.EXTERNAL} />
+          );
         })}
       </Row>
       {verticalArr.map(() => {
         return (
           <>
             <Row>
-              <Wall position={WallPosition.VERTICAL} />
+              <Wall position={WallPosition.VERTICAL} type={WallType.OUTPUT} />
               {horizontalArr.map(() => {
                 return (
                   <>
                     <Cell />
-                    <Wall position={WallPosition.VERTICAL} />
+                    <Wall
+                      position={WallPosition.VERTICAL}
+                      type={WallType.RUBBER}
+                    />
                   </>
                 );
               })}
             </Row>
             <Row>
               {horizontalArr.map(() => {
-                return <Wall position={WallPosition.HORIZONTAL} />;
+                return (
+                  <Wall
+                    position={WallPosition.HORIZONTAL}
+                    type={WallType.TRANSLUCENT}
+                  />
+                );
               })}
             </Row>
           </>
