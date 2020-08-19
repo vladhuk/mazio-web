@@ -1,3 +1,4 @@
+import { range, times, constant, concat } from 'lodash';
 import {
   Wall,
   WallType,
@@ -9,24 +10,17 @@ import {
 function buildWallsPreset(mazeSize: Size): WallType[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
 
-  const walls: WallType[][] = Array(wallsRowsQuantity - 2)
-    .fill(null)
-    .map((nullVal, i) => {
-      const offset = i % 2 === 0 ? 1 : 0;
-      const row = Array(mazeSize.width - offset).fill(WallType.NONE);
+  const walls: WallType[][] = range(wallsRowsQuantity - 2).map((i) => {
+    const offset = i % 2 === 0 ? 1 : 0;
+    const row = times(mazeSize.width - offset, constant(WallType.NONE));
 
-      if (offset) {
-        row.unshift(WallType.EXTERNAL);
-        row.push(WallType.EXTERNAL);
-      }
+    return offset ? concat(WallType.EXTERNAL, row, WallType.EXTERNAL) : row;
+  });
 
-      return row;
-    });
+  const getMazeBorderRow = () =>
+    times(mazeSize.width, constant(WallType.EXTERNAL));
 
-  walls.unshift(Array(mazeSize.width).fill(WallType.EXTERNAL));
-  walls.push(Array(mazeSize.width).fill(WallType.EXTERNAL));
-
-  return walls;
+  return [getMazeBorderRow(), ...walls, getMazeBorderRow()];
 }
 
 export function buildWalls(mazeSize: Size, walls: Wall[]): WallType[][] {
@@ -41,9 +35,10 @@ export function buildWalls(mazeSize: Size, walls: Wall[]): WallType[][] {
 }
 
 function buildCellsPreset(mazeSize: Size): CellType[][] {
-  return Array(mazeSize.height)
-    .fill(null)
-    .map(() => Array(mazeSize.width).fill(CellType.NONE));
+  return times(
+    mazeSize.height,
+    constant(times(mazeSize.width, constant(CellType.NONE)))
+  );
 }
 
 export function buildCells(mazeSize: Size, cells: Cell[]): CellType[][] {
