@@ -27,7 +27,6 @@ $focus-scale-factor: 1.4;
 .cell::before {
   @extend %before-shape;
 
-  background: #f3f3f3;
   border: 2px solid black;
 }
 
@@ -39,4 +38,56 @@ $focus-scale-factor: 1.4;
   @include get-cell-size($focus-scale-factor);
 
   border-width: 3px;
+}
+
+/* ************************************************ */
+/*                     Wall types                   */
+/* ************************************************ */
+
+.cell-none::before, .cell::before {
+  background: #f3f3f3;
+}
+
+.cell-hospital::before {
+  
+}
+
+.cell-arsenal::before {
+
+}
+
+.cell-treasure::before {
+
+}
+
+.cell-fake-treasure::before {
+
+}
+
+.cell-spawn::before {
+
+}
+
+.cell-river::before {
+
+}
+
+.cell-river-start::before {
+
+}
+
+.cell-river-end::before {
+
+}
+
+.cell-trap::before {
+
+}
+
+.cell-pit-in::before {
+
+}
+
+.cell-pit-out::before {
+
 }
