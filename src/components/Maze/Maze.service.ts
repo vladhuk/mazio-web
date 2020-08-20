@@ -35,9 +35,8 @@ export function buildWalls(mazeSize: Size, walls: Wall[]): WallType[][] {
 }
 
 function buildCellsPreset(mazeSize: Size): CellType[][] {
-  return times(
-    mazeSize.height,
-    constant(times(mazeSize.width, constant(CellType.NONE)))
+  return times(mazeSize.height, () =>
+    times(mazeSize.width, constant(CellType.NONE))
   );
 }
 
