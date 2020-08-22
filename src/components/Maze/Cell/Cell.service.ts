@@ -1,5 +1,15 @@
-/* eslint-disable import/prefer-default-export */
-import { CellType } from '../../../types/models/Maze/Structure';
+import {
+  DropTargetMonitor,
+  DropTargetHookSpec,
+  DragSourceHookSpec,
+} from 'react-dnd';
+import { RefObject } from 'react';
+import { CellType, Cell, Location } from '../../../types/models/Maze/Structure';
+import { ItemType } from '../../../constants';
+import {
+  MazeDragElement,
+  MazeDropCollectedProps,
+} from '../../../types/models/dnd/maze';
 
 export function getCssClassNameFromCellType(type: CellType): string {
   switch (type) {
@@ -29,4 +39,44 @@ export function getCssClassNameFromCellType(type: CellType): string {
     default:
       return 'cell-none';
   }
+}
+
+export function buildCellDragOptions({
+  type,
+  location,
+}: Cell): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
+  return {
+    item: { type: ItemType.MAZE_CELL, location },
+    canDrag: type !== CellType.NONE,
+  };
+}
+
+function onDrop(
+  item: MazeDragElement,
+  ref: RefObject<HTMLDivElement>,
+  location: Location,
+  moveCell: (source: Location, target: Location) => void
+): void {
+  moveCell(item.location, location);
+  if (ref && ref.current) {
+    ref.current.focus();
+  }
+}
+
+function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
+  return {
+    isOver: monitor.isOver(),
+  };
+}
+
+export function buildCellDropOptions(
+  ref: RefObject<HTMLDivElement>,
+  location: Location,
+  moveCell: (source: Location, target: Location) => void
+): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
+  return {
+    accept: ItemType.MAZE_CELL,
+    drop: (item) => onDrop(item, ref, location, moveCell),
+    collect: collectDragProps,
+  };
 }

@@ -1,10 +1,11 @@
-import { range, times, constant, concat } from 'lodash';
+import { range, times, constant, concat, cloneDeep } from 'lodash';
 import {
   Wall,
   WallType,
   Size,
   Cell,
   CellType,
+  Location,
 } from '../../types/models/Maze/Structure';
 
 function buildWallsPreset(mazeSize: Size): WallType[][] {
@@ -49,4 +50,15 @@ export function buildCells(mazeSize: Size, cells: Cell[]): CellType[][] {
   });
 
   return preset;
+}
+
+export function swapElementsInMaze<T>(
+  elements: T[][],
+  loc1: Location,
+  loc2: Location
+): T[][] {
+  const newRows = cloneDeep(elements);
+  newRows[loc1.y][loc1.x] = elements[loc2.y][loc2.x];
+  newRows[loc2.y][loc2.x] = elements[loc1.y][loc1.x];
+  return newRows;
 }
