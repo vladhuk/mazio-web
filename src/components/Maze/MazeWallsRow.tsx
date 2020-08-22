@@ -7,7 +7,7 @@ interface Props {
   wallTypes: WallType[];
 }
 
-const MazeWallsRow: FunctionComponent<Props> = ({ wallTypes }: Props) => {
+const MazeWallsRow: FunctionComponent<Props> = ({ wallTypes }) => {
   return (
     <Row>
       {wallTypes.map((wallType, x) => (

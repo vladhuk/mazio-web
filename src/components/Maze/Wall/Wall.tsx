@@ -16,13 +16,13 @@ interface Props {
   type: WallType;
 }
 
-const Wall: FunctionComponent<Props> = ({ position, type }: Props) => {
+const Wall: FunctionComponent<Props> = ({ position, type }) => {
   const positionClassName = getCssClassNameFromWallPosition(position);
   const wallTypeClassName = getCssClassNameFromWallType(type);
 
   const className = `wall ${positionClassName} ${wallTypeClassName}`;
 
-  return <button type="button" className={className} aria-label="wall" />;
+  return <div tabIndex={0} className={className} />;
 };
 
 export default Wall;

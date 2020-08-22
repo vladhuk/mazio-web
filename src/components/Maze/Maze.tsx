@@ -1,16 +1,21 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { range } from 'lodash';
-import Structure from '../../types/models/Maze/Structure';
-import { buildWalls, buildCells } from './Maze.service';
+import Structure, { Location } from '../../types/models/Maze/Structure';
+import { buildWalls, buildCells, swapElementsInMaze } from './Maze.service';
 import MazeWallsRow from './MazeWallsRow';
 import MazeWallsAndCellsRow from './MazeWallsAndCellsRow';
 
 type Props = Structure;
 
-const Maze: FunctionComponent<Props> = ({ size, walls, cells }: Props) => {
-  const wallTypesRows = buildWalls(size, walls);
-  const cellTypesRows = buildCells(size, cells);
+const Maze: FunctionComponent<Props> = ({ size, walls, cells }) => {
+  const [wallTypesRows, setWallTypesRows] = useState(buildWalls(size, walls));
+  const [cellTypesRows, setCellTypesRows] = useState(buildCells(size, cells));
+
+  const moveCell = (source: Location, target: Location): void => {
+    const newRows = swapElementsInMaze(cellTypesRows, source, target);
+    setCellTypesRows(newRows);
+  };
 
   const rows = range(size.height).map((y) => (
     <>
@@ -18,6 +23,8 @@ const Maze: FunctionComponent<Props> = ({ size, walls, cells }: Props) => {
       <MazeWallsAndCellsRow
         wallTypes={wallTypesRows[y * 2 + 1]}
         cellTypes={cellTypesRows[y]}
+        colNumber={y}
+        moveCell={moveCell}
       />
     </>
   ));
