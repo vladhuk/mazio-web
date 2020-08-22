@@ -30,7 +30,7 @@ $focus-scale-factor: 1.4;
   border: 2px solid black;
 }
 
-.cell:hover::before {
+.cell:hover::before, .cell-onhover::before {
   @include get-cell-size($hover-scale-factor);
 }
 
@@ -49,7 +49,7 @@ $focus-scale-factor: 1.4;
 }
 
 .cell-hospital::before {
-  
+  background: tomato;
 }
 
 .cell-arsenal::before {

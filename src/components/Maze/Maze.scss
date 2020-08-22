@@ -7,26 +7,26 @@ $margin: 2px;
   position: relative;
 }
 
-.maze button {
-  padding: 0;
+.maze div {
+  cursor: pointer;
+  outline: none;
 }
 
 .maze {
-  button::before,
-  button:hover::before,
-  button:focus::before {
+  div::before,
+  div:hover::before {
     transition: 0.08s;
+  }
+
+  div:focus::before {
+    transition: 0.2s;
   }
 }
 
-.maze button:hover::before {
+.maze div:hover::before {
   z-index: 1;
 }
 
-.maze button:focus::before {
+.maze div:focus::before {
   z-index: 2;
-}
-
-.maze button:focus {
-  outline: none;
 }
