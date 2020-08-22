@@ -42,5 +42,8 @@ module.exports = {
     'import/prefer-default-export': WARN,
 
     'react/jsx-filename-extension': OFF,
+    'react/prop-types': OFF,
+    
+    'jsx-a11y/no-noninteractive-tabindex': OFF,
   },
 };
