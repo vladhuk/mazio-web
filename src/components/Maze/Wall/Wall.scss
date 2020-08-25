@@ -1,7 +1,7 @@
 @import '../Maze.scss';
 
 $hover-scale-factor: 1.2;
-$focus-scale-factor: 1.5;
+$focus-scale-factor: 1.4;
 $length-width-scale-factor: 0.2;
 $wall-width: $shape-length * $length-width-scale-factor;
 
@@ -53,20 +53,22 @@ $wall-width: $shape-length * $length-width-scale-factor;
   margin-right: $margin;
 }
 
+.wall-v:hover::before, 
+.wall-v.hover::before {
+  @include get-wall-size(v, $hover-scale-factor);
+}
+
+.wall-h:hover::before,
+.wall-h.hover::before {
+  @include get-wall-size(h, $hover-scale-factor);
+}
+
 .wall:focus::before {
   border-width: 2px;
 }
 
-.wall-v:hover::before {
-  @include get-wall-size(v, $hover-scale-factor);
-}
-
 .wall-v:focus::before {
   @include get-wall-size(v, $focus-scale-factor);
-}
-
-.wall-h:hover::before {
-  @include get-wall-size(h, $hover-scale-factor);
 }
 
 .wall-h:focus::before {
@@ -77,12 +79,14 @@ $wall-width: $shape-length * $length-width-scale-factor;
 /*                     Wall types                   */
 /* ************************************************ */
 
-.wall-none {
-  cursor: default!important;
+.wall-none::before {
+  opacity: 0;
+  cursor: default;
 }
 
-.wall-none::before {
-  display: none;
+.wall-none.hover::before {
+  background: black;
+  opacity: 0.4;
 }
 
 .wall-stone:before {

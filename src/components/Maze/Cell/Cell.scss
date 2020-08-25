@@ -30,7 +30,8 @@ $focus-scale-factor: 1.4;
   border: 2px solid black;
 }
 
-.cell:hover::before, .cell-onhover::before {
+.cell:hover::before,
+.cell.hover::before {
   @include get-cell-size($hover-scale-factor);
 }
 
@@ -44,8 +45,15 @@ $focus-scale-factor: 1.4;
 /*                     Wall types                   */
 /* ************************************************ */
 
-.cell-none::before, .cell::before {
+.cell-none::before {
   background: #f3f3f3;
+  cursor: default;
+}
+
+.cell-none:hover::before,
+.cell-none:focus::before {
+  @include get-cell-size(1);
+  border-width: 2px;
 }
 
 .cell-hospital::before {

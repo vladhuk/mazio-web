@@ -7,26 +7,26 @@ $margin: 2px;
   position: relative;
 }
 
-.maze div {
+.maze-element {
   cursor: pointer;
   outline: none;
 }
 
-.maze {
-  div::before,
-  div:hover::before {
-    transition: 0.08s;
-  }
-
-  div:focus::before {
-    transition: 0.2s;
-  }
+.maze-element::before,
+.maze-element:hover::before,
+.maze-element.hover::before {
+  transition: 0.08s;
 }
 
-.maze div:hover::before {
+.maze-element:focus::before {
+  transition: 0.2s;
+}
+    
+.maze-element:hover::before,
+.maze-element.hover::before {
   z-index: 1;
 }
 
-.maze div:focus::before {
+.maze-element:focus::before {
   z-index: 2;
 }
