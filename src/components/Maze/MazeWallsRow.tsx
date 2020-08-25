@@ -1,17 +1,22 @@
 import React, { FunctionComponent } from 'react';
 import { Row } from 'react-bootstrap';
-import { WallType } from '../../types/models/Maze/Structure';
+import { Wall as IWall, Location } from '../../types/models/Maze/Structure';
 import Wall, { WallPosition } from './Wall';
 
 interface Props {
-  wallTypes: WallType[];
+  wallsRow: IWall[];
+  moveWall(source: Location, target: Location): void;
 }
 
-const MazeWallsRow: FunctionComponent<Props> = ({ wallTypes }) => {
+const MazeWallsRow: FunctionComponent<Props> = ({ wallsRow, moveWall }) => {
   return (
     <Row>
-      {wallTypes.map((wallType, x) => (
-        <Wall position={WallPosition.HORIZONTAL} type={wallTypes[x]} />
+      {wallsRow.map((wall, x) => (
+        <Wall
+          position={WallPosition.HORIZONTAL}
+          wall={wallsRow[x]}
+          moveWall={moveWall}
+        />
       ))}
     </Row>
   );

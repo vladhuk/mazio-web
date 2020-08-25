@@ -1,36 +1,37 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { range } from 'lodash';
-import Structure, { Location } from '../../types/models/Maze/Structure';
-import { buildWalls, buildCells, swapElementsInMaze } from './Maze.service';
+import Structure from '../../types/models/Maze/Structure';
+import { buildWalls, buildCells, bindMoveElement } from './Maze.service';
 import MazeWallsRow from './MazeWallsRow';
 import MazeWallsAndCellsRow from './MazeWallsAndCellsRow';
 
 type Props = Structure;
 
 const Maze: FunctionComponent<Props> = ({ size, walls, cells }) => {
-  const [wallTypesRows, setWallTypesRows] = useState(buildWalls(size, walls));
-  const [cellTypesRows, setCellTypesRows] = useState(buildCells(size, cells));
+  const [wallsRows, setWallsRows] = useState(buildWalls(size, walls));
+  const [cellsRows, setCellsRows] = useState(buildCells(size, cells));
 
-  const moveCell = (source: Location, target: Location): void => {
-    const newRows = swapElementsInMaze(cellTypesRows, source, target);
-    setCellTypesRows(newRows);
-  };
+  const moveWall = bindMoveElement(wallsRows, setWallsRows);
+  const moveCell = bindMoveElement(cellsRows, setCellsRows);
 
   const rows = range(size.height).map((y) => (
     <>
-      <MazeWallsRow wallTypes={wallTypesRows[y * 2]} />
+      <MazeWallsRow wallsRow={wallsRows[y * 2]} moveWall={moveWall} />
       <MazeWallsAndCellsRow
-        wallTypes={wallTypesRows[y * 2 + 1]}
-        cellTypes={cellTypesRows[y]}
-        colNumber={y}
+        wallsRow={wallsRows[y * 2 + 1]}
+        cellsRow={cellsRows[y]}
         moveCell={moveCell}
+        moveWall={moveWall}
       />
     </>
   ));
 
   rows.push(
-    <MazeWallsRow wallTypes={wallTypesRows[wallTypesRows.length - 1]} />
+    <MazeWallsRow
+      wallsRow={wallsRows[wallsRows.length - 1]}
+      moveWall={moveWall}
+    />
   );
 
   return <Container className="maze">{rows}</Container>;

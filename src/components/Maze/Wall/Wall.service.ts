@@ -1,5 +1,8 @@
+import { DragSourceHookSpec } from 'react-dnd';
 import { WallPosition } from './Wall';
-import { WallType } from '../../../types/models/Maze/Structure';
+import { WallType, Wall } from '../../../types/models/Maze/Structure';
+import { MazeDragElement } from '../../../types/models/dnd/maze';
+import { ItemType } from '../../../constants';
 
 export function getCssClassNameFromWallPosition(
   position: WallPosition
@@ -23,4 +26,14 @@ export function getCssClassNameFromWallType(type: WallType): string {
     default:
       return 'wall-none';
   }
+}
+
+export function buildWallDragOptions({
+  type,
+  location,
+}: Wall): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
+  return {
+    item: { type: ItemType.MAZE_WALL, location },
+    canDrag: type !== WallType.NONE,
+  };
 }

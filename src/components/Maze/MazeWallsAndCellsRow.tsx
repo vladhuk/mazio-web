@@ -2,39 +2,37 @@ import React, { FunctionComponent } from 'react';
 import { Row } from 'react-bootstrap';
 import { range } from 'lodash';
 import {
-  WallType,
-  CellType,
   Location,
+  Wall as IWall,
+  Cell as ICell,
 } from '../../types/models/Maze/Structure';
 import Wall, { WallPosition } from './Wall';
 import Cell from './Cell';
 
 interface Props {
-  wallTypes: WallType[];
-  cellTypes: CellType[];
-  colNumber: number;
+  wallsRow: IWall[];
+  cellsRow: ICell[];
   moveCell(source: Location, target: Location): void;
+  moveWall(source: Location, target: Location): void;
 }
 
 const MazeWallsAndCellsRow: FunctionComponent<Props> = ({
-  wallTypes,
-  cellTypes,
-  colNumber,
+  wallsRow,
+  cellsRow,
   moveCell,
+  moveWall,
 }) => {
-  const elements = range(cellTypes.length).map((x) => (
+  const buildWall = (wall: IWall): JSX.Element => (
+    <Wall position={WallPosition.VERTICAL} wall={wall} moveWall={moveWall} />
+  );
+
+  const elements = range(cellsRow.length).map((x) => (
     <>
-      <Wall position={WallPosition.VERTICAL} type={wallTypes[x]} />
-      <Cell
-        type={cellTypes[x]}
-        location={{ x, y: colNumber }}
-        moveCell={moveCell}
-      />
+      {buildWall(wallsRow[x])}
+      <Cell cell={cellsRow[x]} moveCell={moveCell} />
     </>
   ));
-  elements.push(
-    <Wall position={WallPosition.VERTICAL} type={wallTypes[cellTypes.length]} />
-  );
+  elements.push(buildWall(wallsRow[cellsRow.length]));
 
   return <Row>{elements}</Row>;
 };
