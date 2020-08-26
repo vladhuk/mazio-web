@@ -90,15 +90,15 @@ $wall-width: $shape-length * $length-width-scale-factor;
 }
 
 .wall-stone:before {
-  background: #ffbd69;
+  background: #b29832;
 }
 
 .wall-output:before {
-  background: #69ff8c;
+  background: #5bcb10;
 }
 
 .wall-rubber:before {
-  background: #ff69ee;
+  background: #8010cb;
 }
 
 .wall-translucent:before {
@@ -106,5 +106,5 @@ $wall-width: $shape-length * $length-width-scale-factor;
 }
 
 .wall-external:before {
-  background: #c70039;
+  background: #cb1910;
 }

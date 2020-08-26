@@ -13,6 +13,11 @@ $focus-scale-factor: 1.4;
   left: -$offset;
 }
 
+@mixin get-svg-background($svg-name) {
+  background: url('../../../assets/' + $svg-name + '.svg') no-repeat center;
+  background-size: 100%;
+}
+
 .cell, .cell::before {
   @include get-cell-size(1);
   border-radius: 10%;
@@ -57,45 +62,65 @@ $focus-scale-factor: 1.4;
 }
 
 .cell-hospital::before {
-  background: tomato;
+  @include get-svg-background('hospital');
+  background-color: #10a7cb;
 }
 
 .cell-arsenal::before {
-
+  @include get-svg-background('target');
+  background-color: #10a7cb;
+  background-size: 90%;
+  background-position: top right;
 }
 
 .cell-treasure::before {
-
+  @include get-svg-background('chest');
+  background-color: #10cb35;
+  background-size: 70%;
 }
 
 .cell-fake-treasure::before {
-
+  @include get-svg-background('chest');
+  background-color: #cb4810;
+  background-size: 70%;
 }
 
 .cell-spawn::before {
-
+  @include get-svg-background('home');
+  background-color: #5c72ff;
+  background-size: 70%;
 }
 
 .cell-river::before {
-
+  @include get-svg-background('river');
+  background-size: 130%;
+  background-position-y: top;
+  background-color: #c4e9fd;
 }
 
 .cell-river-start::before {
-
+  @include get-svg-background('river-start');
 }
 
 .cell-river-end::before {
-
+  @include get-svg-background('river-end');
+  background-color: #c4e9fd;
+  background-size: 130%;
 }
 
 .cell-trap::before {
-
+  @include get-svg-background('trap');
+  background-color: #cb4810;
 }
 
 .cell-pit-in::before {
-
+  @include get-svg-background('pit-in');
+  background-color: #b27932;
+  background-size: 80%;
 }
 
 .cell-pit-out::before {
-
+  @include get-svg-background('pit-out');
+  background-color: #b27932;
+  background-size: 80%;
 }
