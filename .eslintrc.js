@@ -25,6 +25,8 @@ module.exports = {
     },
   },
 
+  ignorePatterns: ['**/*.scss', '**/*.svg'],
+
   rules: {
     'prettier/prettier': [WARN],
 
@@ -48,7 +50,7 @@ module.exports = {
 
     'react/jsx-filename-extension': OFF,
     'react/prop-types': OFF,
-    
+
     'jsx-a11y/no-noninteractive-tabindex': OFF,
     'jsx-a11y/no-static-element-interactions': OFF,
   },
