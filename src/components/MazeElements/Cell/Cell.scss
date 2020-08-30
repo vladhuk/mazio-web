@@ -52,7 +52,7 @@ $focus-scale-factor: 1.4;
   cursor: default;
 }
 
-.cell-none.hover::before,
+.cell-none.hover:not(.drag-hover)::before,
 .cell-none:focus::before {
   @include get-cell-size(1);
   border-width: 2px;
