@@ -14,7 +14,7 @@ $focus-scale-factor: 1.4;
 }
 
 @mixin get-svg-background($svg-name) {
-  background: url('../../../assets/' + $svg-name + '.svg') no-repeat center;
+  background: url('../../../assets/icons/' + $svg-name + '.svg') no-repeat center;
   background-size: 100%;
 }
 
