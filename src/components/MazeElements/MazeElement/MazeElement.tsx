@@ -1,12 +1,10 @@
 import React, { FunctionComponent, useRef, useState } from 'react';
-import './Cell.scss';
+import './MazeElement.scss';
 import { useDrag, useDrop } from 'react-dnd';
 import {
-  Cell as ICell,
+  MazeElement as IMazeElement,
   Location,
-  CellType,
 } from '../../../types/models/Maze/Structure';
-import { getCssClassNameFromCellType } from './Cell.service';
 import {
   MazeDragElement,
   MazeDropCollectedProps,
@@ -14,42 +12,49 @@ import {
 import {
   buildElementDropOptions,
   buildElementDragOptions,
-} from '../Maze.service';
-import { ItemType } from '../../../constants';
+} from './MazeElement.service';
 
 interface Props {
-  cell: ICell;
-  moveCell(source: Location, target: Location): void;
+  element: IMazeElement;
+  dragItemType: string;
+  dragItemNoneType: string;
+  className?: string;
+  moveElement(source: Location, target: Location): void;
 }
 
-const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
+const MazeElement: FunctionComponent<Props> = ({
+  element,
+  dragItemType,
+  dragItemNoneType,
+  className,
+  moveElement,
+}) => {
   const [isHover, setHover] = useState(false);
   const [isFocus, setFocus] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drag] = useDrag<MazeDragElement, unknown, unknown>(
-    buildElementDragOptions(cell, ref, ItemType.MAZE_CELL, CellType.NONE)
+    buildElementDragOptions(element, ref, dragItemType, dragItemNoneType)
   );
 
   const [{ isOver }, drop] = useDrop<
     MazeDragElement,
     unknown,
     MazeDropCollectedProps
-  >(buildElementDropOptions(ItemType.MAZE_CELL, ref, cell.location, moveCell));
+  >(buildElementDropOptions(dragItemType, ref, element.location, moveElement));
 
   drag(drop(ref));
 
-  const cellTypeClassName = getCssClassNameFromCellType(cell.type);
   const dragHoverClassName = isOver ? 'hover drag-hover' : '';
   const hoverClassName = isHover ? 'hover' : '';
-  const className = `maze-element cell ${cellTypeClassName} ${dragHoverClassName} ${hoverClassName}`;
+  const elementClassName = `maze-element ${dragHoverClassName} ${hoverClassName} ${className}`;
 
   return (
     <div
       ref={ref}
       tabIndex={0}
-      className={className}
+      className={elementClassName}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onFocus={() => setTimeout(() => setFocus(true), 200)}
@@ -60,4 +65,4 @@ const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
   );
 };
 
-export default Cell;
+export default MazeElement;

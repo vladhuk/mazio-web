@@ -6,8 +6,8 @@ import {
   Wall as IWall,
   Cell as ICell,
 } from '../../types/models/Maze/Structure';
-import Wall, { WallPosition } from './Wall';
-import Cell from './Cell';
+import Wall, { WallPosition } from '../MazeElements/Wall';
+import Cell from '../MazeElements/Cell';
 
 interface Props {
   wallsRow: IWall[];

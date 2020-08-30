@@ -1,10 +1,4 @@
 import { range, concat, cloneDeep } from 'lodash';
-import { RefObject } from 'react';
-import {
-  DropTargetMonitor,
-  DropTargetHookSpec,
-  DragSourceHookSpec,
-} from 'react-dnd';
 import {
   Wall,
   WallType,
@@ -12,11 +6,8 @@ import {
   Cell,
   CellType,
   Location,
+  MazeElement,
 } from '../../types/models/Maze/Structure';
-import {
-  MazeDragElement,
-  MazeDropCollectedProps,
-} from '../../types/models/dnd/maze';
 
 function buildWallsPreset(mazeSize: Size): Wall[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
@@ -83,7 +74,7 @@ export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
   return preset;
 }
 
-export function swapElements<T extends Cell | Wall>(
+export function swapElements<T extends MazeElement>(
   elements: T[][],
   loc1: Location,
   loc2: Location
@@ -94,59 +85,12 @@ export function swapElements<T extends Cell | Wall>(
   return newRows;
 }
 
-export function bindMoveElement<T extends Cell | Wall>(
+export function bindMoveElement<T extends MazeElement>(
   elementsState: T[][],
   setElementsState: (newState: T[][]) => void
 ): (source: Location, target: Location) => void {
   return (source: Location, target: Location) => {
     const newRows = swapElements(elementsState, source, target);
     setElementsState(newRows);
-  };
-}
-
-function onDrop(
-  item: MazeDragElement,
-  ref: RefObject<HTMLDivElement>,
-  location: Location,
-  moveElement: (source: Location, target: Location) => void
-): void {
-  moveElement(item.location, location);
-  setTimeout(() => ref?.current?.classList.add('hover'), 0);
-}
-
-function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
-  return {
-    isOver: monitor.isOver(),
-  };
-}
-
-export function buildElementDropOptions(
-  itemType: string,
-  ref: RefObject<HTMLDivElement>,
-  location: Location,
-  moveElement: (source: Location, target: Location) => void
-): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
-  return {
-    accept: itemType,
-    drop: (item) => onDrop(item, ref, location, moveElement),
-    collect: collectDragProps,
-  };
-}
-
-function onDragEnd(ref: RefObject<HTMLDivElement>): void {
-  ref?.current?.blur();
-  ref?.current?.classList.remove('hover');
-}
-
-export function buildElementDragOptions(
-  { type, location }: { type: string; location: Location },
-  ref: RefObject<HTMLDivElement>,
-  itemType: string,
-  noneType: string
-): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
-  return {
-    item: { type: itemType, location },
-    canDrag: type !== noneType,
-    end: () => onDragEnd(ref),
   };
 }
