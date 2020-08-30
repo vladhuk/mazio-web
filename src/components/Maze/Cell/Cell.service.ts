@@ -1,8 +1,6 @@
-import { DragSourceHookSpec } from 'react-dnd';
-import { CellType, Cell } from '../../../types/models/Maze/Structure';
-import { MazeDragElement } from '../../../types/models/dnd/maze';
-import { ItemType } from '../../../constants';
+import { CellType } from '../../../types/models/Maze/Structure';
 
+// eslint-disable-next-line import/prefer-default-export
 export function getCssClassNameFromCellType(type: CellType): string {
   switch (type) {
     case CellType.ARSENAL:
@@ -31,14 +29,4 @@ export function getCssClassNameFromCellType(type: CellType): string {
     default:
       return 'cell-none';
   }
-}
-
-export function buildCellDragOptions({
-  type,
-  location,
-}: Cell): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
-  return {
-    item: { type: ItemType.MAZE_CELL, location },
-    canDrag: type !== CellType.NONE,
-  };
 }

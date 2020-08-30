@@ -1,6 +1,10 @@
 import { range, concat, cloneDeep } from 'lodash';
 import { RefObject } from 'react';
-import { DropTargetMonitor, DropTargetHookSpec } from 'react-dnd';
+import {
+  DropTargetMonitor,
+  DropTargetHookSpec,
+  DragSourceHookSpec,
+} from 'react-dnd';
 import {
   Wall,
   WallType,
@@ -13,6 +17,7 @@ import {
   MazeDragElement,
   MazeDropCollectedProps,
 } from '../../types/models/dnd/maze';
+import { ItemType } from '../../constants';
 
 function buildWallsPreset(mazeSize: Size): Wall[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
@@ -107,9 +112,7 @@ function onDrop(
   moveElement: (source: Location, target: Location) => void
 ): void {
   moveElement(item.location, location);
-  if (ref && ref.current) {
-    ref.current.focus();
-  }
+  setTimeout(() => ref?.current?.classList.add('hover'), 0);
 }
 
 function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
@@ -119,14 +122,32 @@ function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
 }
 
 export function buildElementDropOptions(
-  draggedItemId: string,
+  itemType: string,
   ref: RefObject<HTMLDivElement>,
   location: Location,
   moveElement: (source: Location, target: Location) => void
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
-    accept: draggedItemId,
+    accept: itemType,
     drop: (item) => onDrop(item, ref, location, moveElement),
     collect: collectDragProps,
+  };
+}
+
+function onDragEnd(ref: RefObject<HTMLDivElement>): void {
+  ref?.current?.blur();
+  ref?.current?.classList.remove('hover');
+}
+
+export function buildElementDragOptions(
+  { type, location }: { type: string; location: Location },
+  ref: RefObject<HTMLDivElement>,
+  itemType: string,
+  noneType: string
+): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
+  return {
+    item: { type: itemType, location },
+    canDrag: type !== noneType,
+    end: () => onDragEnd(ref),
   };
 }

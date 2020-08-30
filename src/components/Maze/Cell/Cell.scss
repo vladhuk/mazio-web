@@ -31,23 +31,21 @@ $focus-scale-factor: 1.4;
 
 .cell::before {
   @extend %before-shape;
-
   border: 2px solid black;
 }
 
-.cell:hover::before,
+.cell.over::before,
 .cell.hover::before {
   @include get-cell-size($hover-scale-factor);
 }
 
 .cell:focus::before {
   @include get-cell-size($focus-scale-factor);
-
   border-width: 3px;
 }
 
 /* ************************************************ */
-/*                     Wall types                   */
+/*                     Cell types                   */
 /* ************************************************ */
 
 .cell-none::before {
@@ -55,7 +53,7 @@ $focus-scale-factor: 1.4;
   cursor: default;
 }
 
-.cell-none:hover::before,
+.cell-none.hover::before,
 .cell-none:focus::before {
   @include get-cell-size(1);
   border-width: 2px;

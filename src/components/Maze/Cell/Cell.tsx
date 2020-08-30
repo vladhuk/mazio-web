@@ -1,16 +1,20 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FunctionComponent, useRef, useState } from 'react';
 import './Cell.scss';
 import { useDrag, useDrop } from 'react-dnd';
-import { Cell as ICell, Location } from '../../../types/models/Maze/Structure';
 import {
-  getCssClassNameFromCellType,
-  buildCellDragOptions,
-} from './Cell.service';
+  Cell as ICell,
+  Location,
+  CellType,
+} from '../../../types/models/Maze/Structure';
+import { getCssClassNameFromCellType } from './Cell.service';
 import {
   MazeDragElement,
   MazeDropCollectedProps,
 } from '../../../types/models/dnd/maze';
-import { buildElementDropOptions } from '../Maze.service';
+import {
+  buildElementDropOptions,
+  buildElementDragOptions,
+} from '../Maze.service';
 import { ItemType } from '../../../constants';
 
 interface Props {
@@ -19,10 +23,14 @@ interface Props {
 }
 
 const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
+  // Hover is handled by hands for more flexibility. Currently we need to remove hover
+  // classname from drag source after dropping
+  const [isHover, setHover] = useState(false);
+
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drag] = useDrag<MazeDragElement, unknown, unknown>(
-    buildCellDragOptions(cell)
+    buildElementDragOptions(cell, ref, ItemType.MAZE_CELL, CellType.NONE)
   );
 
   const [{ isOver }, drop] = useDrop<
@@ -34,10 +42,19 @@ const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
   drag(drop(ref));
 
   const cellTypeClassName = getCssClassNameFromCellType(cell.type);
-  const isOverClassName = isOver ? 'hover' : '';
-  const className = `maze-element cell ${cellTypeClassName} ${isOverClassName}`;
+  const isOverClassName = isOver ? 'over' : '';
+  const isHoverClassName = isHover ? 'hover' : '';
+  const className = `maze-element cell ${cellTypeClassName} ${isOverClassName} ${isHoverClassName}`;
 
-  return <div ref={ref} tabIndex={0} className={className} />;
+  return (
+    <div
+      ref={ref}
+      tabIndex={0}
+      className={className}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    />
+  );
 };
 
 export default Cell;

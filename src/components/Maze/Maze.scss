@@ -12,9 +12,7 @@ $margin: 2px;
   outline: none;
 }
 
-.maze-element::before,
-.maze-element:hover::before,
-.maze-element.hover::before {
+.maze-element::before {
   transition: 0.08s;
 }
 
@@ -22,7 +20,7 @@ $margin: 2px;
   transition: 0.2s;
 }
     
-.maze-element:hover::before,
+.maze-element.over::before,
 .maze-element.hover::before {
   z-index: 1;
 }
