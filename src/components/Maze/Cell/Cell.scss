@@ -34,7 +34,6 @@ $focus-scale-factor: 1.4;
   border: 2px solid black;
 }
 
-.cell.over::before,
 .cell.hover::before {
   @include get-cell-size($hover-scale-factor);
 }

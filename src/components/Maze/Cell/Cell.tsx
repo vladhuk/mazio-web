@@ -23,8 +23,6 @@ interface Props {
 }
 
 const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
-  // Hover is handled by hands for more flexibility. Currently we need to remove hover
-  // classname from drag source after dropping
   const [isHover, setHover] = useState(false);
   const [isFocus, setFocus] = useState(false);
 
@@ -43,9 +41,9 @@ const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
   drag(drop(ref));
 
   const cellTypeClassName = getCssClassNameFromCellType(cell.type);
-  const isOverClassName = isOver ? 'over' : '';
-  const isHoverClassName = isHover ? 'hover' : '';
-  const className = `maze-element cell ${cellTypeClassName} ${isOverClassName} ${isHoverClassName}`;
+  const dragHoverClassName = isOver ? 'hover drag-hover' : '';
+  const hoverClassName = isHover ? 'hover' : '';
+  const className = `maze-element cell ${cellTypeClassName} ${dragHoverClassName} ${hoverClassName}`;
 
   return (
     <div

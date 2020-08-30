@@ -32,8 +32,6 @@ interface Props {
 }
 
 const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
-  // Hover is handled by hands for more flexibility. Currently we need to remove hover
-  // classname from drag source after dropping
   const [isHover, setHover] = useState(false);
   const [isFocus, setFocus] = useState(false);
 
@@ -53,10 +51,10 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
 
   const positionClassName = getCssClassNameFromWallPosition(position);
   const wallTypeClassName = getCssClassNameFromWallType(wall.type);
-  const isOverClassName = isOver ? 'over' : '';
-  const isHoverClassName = isHover ? 'hover' : '';
+  const dragHoverClassName = isOver ? 'hover drag-hover' : '';
+  const hoverClassName = isHover ? 'hover' : '';
 
-  const className = `maze-element wall ${positionClassName} ${wallTypeClassName} ${isOverClassName} ${isHoverClassName}`;
+  const className = `maze-element wall ${positionClassName} ${wallTypeClassName} ${dragHoverClassName} ${hoverClassName}`;
 
   return (
     <div

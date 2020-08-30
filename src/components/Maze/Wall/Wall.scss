@@ -53,12 +53,10 @@ $wall-width: $shape-length * $length-width-scale-factor;
   margin-right: $margin;
 }
 
-.wall-v.over::before,
 .wall-v.hover::before {
   @include get-wall-size(v, $hover-scale-factor);
 }
 
-.wall-h.over::before,
 .wall-h.hover::before {
   @include get-wall-size(h, $hover-scale-factor);
 }
@@ -84,7 +82,7 @@ $wall-width: $shape-length * $length-width-scale-factor;
   cursor: default;
 }
 
-.wall-none.over::before {
+.wall-none.drag-hover::before {
   background: black;
   opacity: 0.4;
 }

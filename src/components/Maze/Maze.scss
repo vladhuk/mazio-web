@@ -20,7 +20,6 @@ $margin: 2px;
   transition: 0.2s;
 }
     
-.maze-element.over::before,
 .maze-element.hover::before {
   z-index: 1;
 }
