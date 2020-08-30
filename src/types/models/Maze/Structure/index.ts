@@ -1,3 +1,4 @@
+export * from './MazeElement';
 export * from './Cell';
 export * from './Wall';
 export * from './Location';

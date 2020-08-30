@@ -1,4 +1,4 @@
-import { Location } from './Location';
+import { MazeElement } from '.';
 
 export enum WallType {
   STONE = 'STONE',
@@ -11,7 +11,6 @@ export enum WallType {
   EXTERNAL = 'EXTERNAL',
 }
 
-export interface Wall {
-  location: Location;
+export interface Wall extends MazeElement {
   type: WallType;
 }
