@@ -17,7 +17,6 @@ import {
   MazeDragElement,
   MazeDropCollectedProps,
 } from '../../types/models/dnd/maze';
-import { ItemType } from '../../constants';
 
 function buildWallsPreset(mazeSize: Size): Wall[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
