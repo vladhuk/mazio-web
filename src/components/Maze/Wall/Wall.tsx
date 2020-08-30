@@ -35,6 +35,7 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
   // Hover is handled by hands for more flexibility. Currently we need to remove hover
   // classname from drag source after dropping
   const [isHover, setHover] = useState(false);
+  const [isFocus, setFocus] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -64,6 +65,10 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
       className={className}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onFocus={() => setTimeout(() => setFocus(true), 200)}
+      onBlur={() => setFocus(false)}
+      onClick={() => isFocus && ref?.current?.blur()}
+      onKeyDown={(event) => event.key === 'Escape' && ref?.current?.blur()}
     />
   );
 };
