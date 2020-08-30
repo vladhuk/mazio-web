@@ -28,6 +28,11 @@ module.exports = {
   rules: {
     'prettier/prettier': [WARN],
 
+    'no-use-before-define': WARN,
+    'no-unused-expressions': OFF,
+
+    '@typescript-eslint/no-unused-expressions': 'error',
+
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -45,5 +50,6 @@ module.exports = {
     'react/prop-types': OFF,
     
     'jsx-a11y/no-noninteractive-tabindex': OFF,
+    'jsx-a11y/no-static-element-interactions': OFF,
   },
 };
