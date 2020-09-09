@@ -10,7 +10,7 @@ import {
   WallType,
 } from '../../../types/models/Maze/Structure';
 import { ItemType } from '../../../constants';
-import MazeElement from '../MazeElement';
+import MoveableMazeElement from '../MoveableMazeElement';
 
 export enum WallPosition {
   HORIZONTAL,
@@ -30,7 +30,7 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
   const className = `wall ${positionClassName} ${wallTypeClassName}`;
 
   return (
-    <MazeElement
+    <MoveableMazeElement
       className={className}
       element={wall}
       dragItemType={ItemType.MAZE_WALL}

@@ -6,7 +6,7 @@ import {
   CellType,
 } from '../../../types/models/Maze/Structure';
 import { ItemType } from '../../../constants';
-import MazeElement from '../MazeElement';
+import MoveableMazeElement from '../MoveableMazeElement';
 import { getCssClassNameFromCellType } from './Cell.service';
 
 interface Props {
@@ -18,7 +18,7 @@ const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
   const cellTypeClassName = getCssClassNameFromCellType(cell.type);
 
   return (
-    <MazeElement
+    <MoveableMazeElement
       className={`cell ${cellTypeClassName}`}
       element={cell}
       dragItemType={ItemType.MAZE_CELL}
