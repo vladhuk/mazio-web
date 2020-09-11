@@ -22,10 +22,7 @@ const MazeElementsMenu: FunctionComponent<Props> = ({
       {cellTypes.map((type) => (
         <ElementWrapper key={type}>
           <Tooltip text={type}>
-            <Cell
-              cell={{ type, location: { x: 0, y: 0 } }}
-              moveCell={() => {}}
-            />
+            <Cell cell={{ type, location: { x: 0, y: 0 } }} />
           </Tooltip>
         </ElementWrapper>
       ))}
@@ -39,7 +36,6 @@ const MazeElementsMenu: FunctionComponent<Props> = ({
             <Wall
               wall={{ type, location: { x: 0, y: 0 } }}
               position={WallPosition.HORIZONTAL}
-              moveWall={() => {}}
             />
           </Tooltip>
         </ElementWrapper>
