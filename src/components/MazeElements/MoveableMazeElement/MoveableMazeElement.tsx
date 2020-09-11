@@ -1,10 +1,7 @@
 import React, { FunctionComponent, useRef } from 'react';
 import '../MazeElement/MazeElement.scss';
 import { useDrag } from 'react-dnd';
-import {
-  MazeElement as IMazeElement,
-  Location,
-} from '../../../types/models/Maze/Structure';
+import { MazeElement as IMazeElement } from '../../../types/models/Maze/Structure';
 import { MazeDragElement } from '../../../types/models/dnd/maze';
 import { buildElementDragOptions } from './MoveableMazeElement.service';
 import MazeElement from '../MazeElement';
@@ -16,7 +13,7 @@ interface Props {
   dragItemNoneType: string;
   className?: string;
   isDropDisabled?: boolean;
-  moveElement?: (source: Location, target: Location) => void;
+  moveElement?: (source: IMazeElement, target: IMazeElement) => void;
 }
 
 const MoveableMazeElement: FunctionComponent<Props> = ({

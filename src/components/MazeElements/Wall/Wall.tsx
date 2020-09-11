@@ -5,8 +5,8 @@ import {
   getCssClassNameFromWallPosition,
 } from './Wall.service';
 import {
+  MazeElement,
   Wall as IWall,
-  Location,
   WallType,
 } from '../../../types/models/Maze/Structure';
 import { ItemType } from '../../../constants';
@@ -20,7 +20,7 @@ export enum WallPosition {
 interface Props {
   position: WallPosition;
   wall: IWall;
-  moveWall?: (source: Location, target: Location) => void;
+  moveWall?: (source: MazeElement, target: MazeElement) => void;
 }
 
 const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {

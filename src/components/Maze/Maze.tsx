@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { range } from 'lodash';
 import Structure from '../../types/models/Maze/Structure';
-import { buildWalls, buildCells, bindMoveElement } from './Maze.service';
+import { buildWalls, buildCells, bindMoveOrAddElement } from './Maze.service';
 import MazeWallsRow from './MazeWallsRow';
 import MazeWallsAndCellsRow from './MazeWallsAndCellsRow';
 
@@ -11,8 +11,8 @@ const Maze: FunctionComponent<Props> = ({ size, walls, cells }) => {
   const [wallsRows, setWallsRows] = useState(buildWalls(size, walls));
   const [cellsRows, setCellsRows] = useState(buildCells(size, cells));
 
-  const moveWall = bindMoveElement(wallsRows, setWallsRows);
-  const moveCell = bindMoveElement(cellsRows, setCellsRows);
+  const moveWall = bindMoveOrAddElement(wallsRows, setWallsRows);
+  const moveCell = bindMoveOrAddElement(cellsRows, setCellsRows);
 
   const rows = range(size.height).map((y) => (
     <>

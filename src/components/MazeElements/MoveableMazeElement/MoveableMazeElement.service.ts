@@ -8,15 +8,19 @@ import {
   MazeDragElement,
   MazeDropCollectedProps,
 } from '../../../types/models/dnd/maze';
-import { Location, MazeElement } from '../../../types/models/Maze/Structure';
+import { MazeElement } from '../../../types/models/Maze/Structure';
 
 function onDrop(
-  item: MazeDragElement,
   ref: RefObject<HTMLDivElement>,
-  location: Location,
-  moveElement: (source: Location, target: Location) => void
+  draggedItem: MazeDragElement,
+  droppableElement: MazeElement,
+  moveElement: (source: MazeElement, target: MazeElement) => void
 ): void {
-  moveElement(item.location, location);
+  const sourceElement = {
+    type: draggedItem.elementType,
+    location: draggedItem.location,
+  };
+  moveElement(sourceElement, droppableElement);
   setTimeout(() => ref?.current?.classList.add('hover'), 0);
 }
 
@@ -27,14 +31,15 @@ function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
 }
 
 export function buildElementDropOptions(
-  itemType: string,
+  droppableItemType: string,
   ref: RefObject<HTMLDivElement>,
-  location: Location,
-  moveElement: (source: Location, target: Location) => void
+  droppableElement: MazeElement,
+  moveElement: (source: MazeElement, target: MazeElement) => void
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
-    accept: itemType,
-    drop: (item) => onDrop(item, ref, location, moveElement),
+    accept: droppableItemType,
+    drop: (draggedItem) =>
+      onDrop(ref, draggedItem, droppableElement, moveElement),
     collect: collectDragProps,
   };
 }
@@ -47,12 +52,12 @@ function onDragEnd(ref: RefObject<HTMLDivElement>): void {
 export function buildElementDragOptions(
   { type, location }: MazeElement,
   ref: RefObject<HTMLDivElement>,
-  itemType: string,
-  noneType: string
+  draggedItemType: string,
+  noneElementType: string
 ): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
   return {
-    item: { type: itemType, location },
-    canDrag: type !== noneType,
+    item: { type: draggedItemType, elementType: type, location },
+    canDrag: type !== noneElementType,
     end: () => onDragEnd(ref),
   };
 }

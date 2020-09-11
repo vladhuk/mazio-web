@@ -1,10 +1,7 @@
 import React, { forwardRef, RefObject } from 'react';
 import '../MazeElement/MazeElement.scss';
 import { useDrop } from 'react-dnd';
-import {
-  MazeElement as IMazeElement,
-  Location,
-} from '../../../types/models/Maze/Structure';
+import { MazeElement as IMazeElement } from '../../../types/models/Maze/Structure';
 import {
   MazeDragElement,
   MazeDropCollectedProps,
@@ -17,7 +14,7 @@ interface Props {
   dragItemType: string;
   dragItemNoneType: string;
   className?: string;
-  moveElement: (source: Location, target: Location) => void;
+  moveElement: (source: IMazeElement, target: IMazeElement) => void;
 }
 
 const DroppableMazeElement = forwardRef<HTMLDivElement, Props>(
@@ -28,14 +25,8 @@ const DroppableMazeElement = forwardRef<HTMLDivElement, Props>(
       MazeDragElement,
       unknown,
       MazeDropCollectedProps
-    >(
-      buildElementDropOptions(
-        dragItemType,
-        castedRef,
-        element.location,
-        moveElement
-      )
-    );
+    >(buildElementDropOptions(dragItemType, castedRef, element, moveElement));
+
     drop(castedRef);
 
     const dragHoverClassName = isOver ? 'hover drag-hover' : '';

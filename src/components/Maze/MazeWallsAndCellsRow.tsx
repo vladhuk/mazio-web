@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { Row } from 'react-bootstrap';
 import { range } from 'lodash';
 import {
-  Location,
   Wall as IWall,
   Cell as ICell,
+  MazeElement,
 } from '../../types/models/Maze/Structure';
 import Wall, { WallPosition } from '../MazeElements/Wall';
 import Cell from '../MazeElements/Cell';
@@ -12,8 +12,8 @@ import Cell from '../MazeElements/Cell';
 interface Props {
   wallsRow: IWall[];
   cellsRow: ICell[];
-  moveCell(source: Location, target: Location): void;
-  moveWall(source: Location, target: Location): void;
+  moveCell(source: MazeElement, target: MazeElement): void;
+  moveWall(source: MazeElement, target: MazeElement): void;
 }
 
 const MazeWallsAndCellsRow: FunctionComponent<Props> = ({

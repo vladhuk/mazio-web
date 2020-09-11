@@ -9,6 +9,9 @@ import {
   MazeElement,
 } from '../../types/models/Maze/Structure';
 
+/**
+ * Builds walls preset with only outside walls
+ */
 function buildWallsPreset(mazeSize: Size): Wall[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
 
@@ -54,6 +57,9 @@ export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
   return preset;
 }
 
+/**
+ * Builds preset with emty cells
+ */
 function buildCellsPreset(mazeSize: Size): Cell[][] {
   return range(mazeSize.height).map((y) =>
     range(mazeSize.width).map((x) => ({
@@ -85,12 +91,30 @@ export function swapElements<T extends MazeElement>(
   return newRows;
 }
 
-export function bindMoveElement<T extends MazeElement>(
+export function addElement<T extends MazeElement>(
+  elements: T[][],
+  sourceElementType: string,
+  targetElementLocation: Location
+): T[][] {
+  const newRows = cloneDeep(elements);
+  const { x, y } = targetElementLocation;
+  newRows[y][x].type = sourceElementType;
+  return newRows;
+}
+
+/**
+ * Swap elements if both of them inside maze. Copy element to maze if source
+ * element outside maze.
+ */
+export function bindMoveOrAddElement<T extends MazeElement>(
   elementsState: T[][],
   setElementsState: (newState: T[][]) => void
-): (source: Location, target: Location) => void {
-  return (source: Location, target: Location) => {
-    const newRows = swapElements(elementsState, source, target);
+): (source: MazeElement, target: MazeElement) => void {
+  return (source: MazeElement, target: MazeElement) => {
+    const newRows =
+      source.location.x < 0
+        ? addElement(elementsState, source.type, target.location)
+        : swapElements(elementsState, source.location, target.location);
     setElementsState(newRows);
   };
 }

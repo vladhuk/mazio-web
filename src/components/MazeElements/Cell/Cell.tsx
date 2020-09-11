@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import './Cell.scss';
 import {
   Cell as ICell,
-  Location,
   CellType,
+  MazeElement,
 } from '../../../types/models/Maze/Structure';
 import { ItemType } from '../../../constants';
 import MoveableMazeElement from '../MoveableMazeElement';
@@ -11,7 +11,7 @@ import { getCssClassNameFromCellType } from './Cell.service';
 
 interface Props {
   cell: ICell;
-  moveCell?: (source: Location, target: Location) => void;
+  moveCell?: (source: MazeElement, target: MazeElement) => void;
 }
 
 const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
