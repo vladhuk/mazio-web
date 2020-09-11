@@ -11,7 +11,7 @@ import { getCssClassNameFromCellType } from './Cell.service';
 
 interface Props {
   cell: ICell;
-  moveCell(source: Location, target: Location): void;
+  moveCell?: (source: Location, target: Location) => void;
 }
 
 const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {

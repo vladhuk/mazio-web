@@ -20,7 +20,7 @@ export enum WallPosition {
 interface Props {
   position: WallPosition;
   wall: IWall;
-  moveWall(source: Location, target: Location): void;
+  moveWall?: (source: Location, target: Location) => void;
 }
 
 const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
