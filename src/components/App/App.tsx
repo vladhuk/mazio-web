@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Container } from 'react-bootstrap';
 import Maze from '../Maze';
 import {
   Wall,
@@ -8,6 +9,7 @@ import {
   Cell,
   CellType,
 } from '../../types/models/Maze/Structure';
+import MazeElementsMenu from '../MazeElementsMenu';
 
 const App: FunctionComponent = () => {
   const walls: Wall[] = [
@@ -31,10 +33,38 @@ const App: FunctionComponent = () => {
     { location: { x: 3, y: 1 }, type: CellType.PIT_OUT },
   ];
 
+  const cellTypesInMenu = [
+    CellType.ARSENAL,
+    CellType.HOSPITAL,
+    CellType.TREASURE,
+    CellType.FAKE_TREASURE,
+    CellType.SPAWN,
+    CellType.RIVER,
+    CellType.RIVER_START,
+    CellType.RIVER_END,
+    CellType.TRAP,
+    CellType.PIT_IN,
+  ];
+
+  const wallTypesInMenu = [
+    WallType.STONE,
+    WallType.RUBBER,
+    WallType.TRANSLUCENT,
+    WallType.OUTPUT,
+  ];
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Maze size={{ height: 7, width: 7 }} walls={walls} cells={cells} />
-    </DndProvider>
+    <Container>
+      <div className="d-flex justify-content-between my-3">
+        <DndProvider backend={HTML5Backend}>
+          <Maze size={{ height: 7, width: 7 }} walls={walls} cells={cells} />
+          <MazeElementsMenu
+            cellTypes={cellTypesInMenu}
+            wallTypes={wallTypesInMenu}
+          />
+        </DndProvider>
+      </div>
+    </Container>
   );
 };
 

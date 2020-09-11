@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Container } from 'react-bootstrap';
 import { range } from 'lodash';
 import Structure from '../../types/models/Maze/Structure';
 import { buildWalls, buildCells, bindMoveElement } from './Maze.service';
@@ -34,7 +33,7 @@ const Maze: FunctionComponent<Props> = ({ size, walls, cells }) => {
     />
   );
 
-  return <Container className="maze">{rows}</Container>;
+  return <div className="maze">{rows}</div>;
 };
 
 export default Maze;
