@@ -34,23 +34,21 @@ const App: FunctionComponent = () => {
   ];
 
   const cellTypesInMenu = [
+    CellType.SPAWN,
     CellType.ARSENAL,
     CellType.HOSPITAL,
     CellType.TREASURE,
     CellType.FAKE_TREASURE,
-    CellType.SPAWN,
-    CellType.RIVER,
-    CellType.RIVER_START,
-    CellType.RIVER_END,
     CellType.TRAP,
     CellType.PIT_IN,
+    CellType.RIVER_START,
   ];
 
   const wallTypesInMenu = [
+    WallType.OUTPUT,
     WallType.STONE,
     WallType.RUBBER,
     WallType.TRANSLUCENT,
-    WallType.OUTPUT,
   ];
 
   return (
