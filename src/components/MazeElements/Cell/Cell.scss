@@ -18,105 +18,107 @@ $focus-scale-factor: 1.4;
   background-size: 100%;
 }
 
-.cell, .cell::before {
-  @include get-cell-size(1);
-  border-radius: 10%;
-}
-
 .cell {
   border: none;
   background: rgba(0, 0, 0, 0.7);
   margin: $margin;
-}
 
-.cell::before {
-  @extend %before-shape;
-  border: 2px solid black;
-}
+  &, &::before {
+    @include get-cell-size(1);
+    border-radius: 10%;
+  }
 
-.cell.hover::before {
-  @include get-cell-size($hover-scale-factor);
-}
+  &::before {
+    @extend %before-shape;
+    border: 2px solid black;
+  }
 
-.cell:focus::before {
-  @include get-cell-size($focus-scale-factor);
-}
+  &.hover::before {
+    @include get-cell-size($hover-scale-factor);
+  }
+  
+  &:focus::before {
+    @include get-cell-size($focus-scale-factor);
+  }
+  
+  /* ************************************************ */
+  /*                     Cell types                   */
+  /* ************************************************ */
 
-/* ************************************************ */
-/*                     Cell types                   */
-/* ************************************************ */
-
-.cell-none::before {
-  background: #f3f3f3;
-  cursor: default;
-}
-
-.cell-none.hover:not(.drag-hover)::before,
-.cell-none:focus::before {
-  @include get-cell-size(1);
-  filter: none;
-}
-
-.cell-hospital::before {
-  @include get-svg-background('hospital');
-  background-color: #10a7cb;
-}
-
-.cell-arsenal::before {
-  @include get-svg-background('target');
-  background-color: #10a7cb;
-  background-size: 90%;
-  background-position: top right;
-}
-
-.cell-treasure::before {
-  @include get-svg-background('chest');
-  background-color: #10cb35;
-  background-size: 70%;
-}
-
-.cell-fake-treasure::before {
-  @include get-svg-background('chest');
-  background-color: #cb4810;
-  background-size: 70%;
-}
-
-.cell-spawn::before {
-  @include get-svg-background('home');
-  background-color: #5c72ff;
-  background-size: 70%;
-}
-
-.cell-river::before {
-  @include get-svg-background('river');
-  background-size: 130%;
-  background-position-y: top;
-  background-color: #c4e9fd;
-}
-
-.cell-river-start::before {
-  @include get-svg-background('river-start');
-}
-
-.cell-river-end::before {
-  @include get-svg-background('river-end');
-  background-color: #c4e9fd;
-  background-size: 130%;
-}
-
-.cell-trap::before {
-  @include get-svg-background('trap');
-  background-color: #cb4810;
-}
-
-.cell-pit-in::before {
-  @include get-svg-background('pit-in');
-  background-color: #b27932;
-  background-size: 80%;
-}
-
-.cell-pit-out::before {
-  @include get-svg-background('pit-out');
-  background-color: #b27932;
-  background-size: 80%;
+  &-none {
+    &::before {
+      background: #f3f3f3;
+      cursor: default;
+    }
+    
+    &.hover:not(.drag-hover)::before,
+    &:focus::before {
+      @include get-cell-size(1);
+      filter: none;
+    }
+  }
+  
+  &-hospital::before {
+    @include get-svg-background('hospital');
+    background-color: #10a7cb;
+  }
+  
+  &-arsenal::before {
+    @include get-svg-background('target');
+    background-color: #10a7cb;
+    background-size: 90%;
+    background-position: top right;
+  }
+  
+  &-treasure::before {
+    @include get-svg-background('chest');
+    background-color: #10cb35;
+    background-size: 70%;
+  }
+  
+  &-fake-treasure::before {
+    @include get-svg-background('chest');
+    background-color: #cb4810;
+    background-size: 70%;
+  }
+  
+  &-spawn::before {
+    @include get-svg-background('home');
+    background-color: #5c72ff;
+    background-size: 70%;
+  }
+  
+  &-river::before {
+    @include get-svg-background('river');
+    background-size: 130%;
+    background-position-y: top;
+    background-color: #c4e9fd;
+  }
+  
+  &-river-start::before {
+    @include get-svg-background('river-start');
+  }
+  
+  &-river-end::before {
+    @include get-svg-background('river-end');
+    background-color: #c4e9fd;
+    background-size: 130%;
+  }
+  
+  &-trap::before {
+    @include get-svg-background('trap');
+    background-color: #cb4810;
+  }
+  
+  &-pit-in::before {
+    @include get-svg-background('pit-in');
+    background-color: #b27932;
+    background-size: 80%;
+  }
+  
+  &-pit-out::before {
+    @include get-svg-background('pit-out');
+    background-color: #b27932;
+    background-size: 80%;
+  }
 }

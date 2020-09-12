@@ -27,80 +27,82 @@ $wall-width: $shape-length * $length-width-scale-factor;
 .wall {
   background: none;
   border: none;
-}
 
-.wall::before {
-  @extend %before-shape; 
+  &::before {
+    @extend %before-shape; 
+    
+    border: 1px solid black;
+    border-radius: 15%;
+  }
+
+  &-v, &-v::before {
+    @include get-wall-size(v, 1);
+  }
+
+  &-h, &-h::before {
+    @include get-wall-size(h, 1);
+  }
+
+  &-v {
+    margin-top: $margin;
+  }
   
-  border: 1px solid black;
-  border-radius: 15%;
-}
+  &-h {
+    margin-left: $wall-width + $margin;
+    margin-right: $margin;
+  }
+  
+  &-v.hover::before {
+    @include get-wall-size(v, $hover-scale-factor);
+  }
+  
+  &-h.hover::before {
+    @include get-wall-size(h, $hover-scale-factor);
+  }
+  
+  &-v:focus::before {
+    @include get-wall-size(v, $focus-scale-factor);
+  }
+  
+  &-h:focus::before {
+    @include get-wall-size(h, $focus-scale-factor);
+  }
+  
+  /* ************************************************ */
+  /*                     Wall types                   */
+  /* ************************************************ */
 
-.wall-v, .wall-v::before {
-  @include get-wall-size(v, 1);
-}
-
-.wall-h, .wall-h::before {
-  @include get-wall-size(h, 1);
-}
-
-.wall-v {
-  margin-top: $margin;
-}
-
-.wall-h {
-  margin-left: $wall-width + $margin;
-  margin-right: $margin;
-}
-
-.wall-v.hover::before {
-  @include get-wall-size(v, $hover-scale-factor);
-}
-
-.wall-h.hover::before {
-  @include get-wall-size(h, $hover-scale-factor);
-}
-
-.wall-v:focus::before {
-  @include get-wall-size(v, $focus-scale-factor);
-}
-
-.wall-h:focus::before {
-  @include get-wall-size(h, $focus-scale-factor);
-}
-
-/* ************************************************ */
-/*                     Wall types                   */
-/* ************************************************ */
-
-.wall-none::before {
-  opacity: 0;
-  cursor: default;
-  border: none;
-}
-
-.wall-none.hover.drag-hover::before {
-  background: black;
-  opacity: 0.4;
-  filter: none;
-}
-
-.wall-stone:before {
-  background: #b29832;
-}
-
-.wall-output:before {
-  background: #5bcb10;
-}
-
-.wall-rubber:before {
-  background: #8010cb;
-}
-
-.wall-translucent:before {
-  background: #69dcff;
-}
-
-.wall-external:before {
-  background: #cb1910;
+  &-none {
+    &::before {
+      opacity: 0;
+      cursor: default;
+      border: none;
+    }
+    
+    &.hover.drag-hover::before {
+      background: black;
+      opacity: 0.4;
+      filter: none;
+    }
+  }
+  
+  &-stone:before {
+    background: #b29832;
+  }
+  
+  &-output:before {
+    background: #5bcb10;
+  }
+  
+  &-rubber:before {
+    background: #8010cb;
+  }
+  
+  &-translucent:before {
+    background: #69dcff;
+  }
+  
+  &-external:before {
+    background: #cb1910;
+  }
 }
