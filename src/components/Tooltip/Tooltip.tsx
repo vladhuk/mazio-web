@@ -10,7 +10,7 @@ interface Props {
 const Tooltip: FunctionComponent<Props> = ({ text, children }) => (
   <OverlayTrigger
     overlay={<BSTooltip id={`tooltip-${text}`}>{text}</BSTooltip>}
-    delay={{ show: 400, hide: 0 }}
+    delay={{ show: 500, hide: 0 }}
   >
     <div>{children}</div>
   </OverlayTrigger>
