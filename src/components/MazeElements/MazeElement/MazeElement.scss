@@ -16,12 +16,15 @@ $margin: 2px;
   transition: 0.08s;
 }
 
-.maze-element:focus::before {
+.maze-element:focus::before,
+.maze-element.hover:focus::before {
   transition: 0.2s;
+  filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.5));
 }
-    
+
 .maze-element.hover::before {
   z-index: 1;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
 }
 
 .maze-element:focus::before {

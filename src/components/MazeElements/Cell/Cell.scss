@@ -40,7 +40,6 @@ $focus-scale-factor: 1.4;
 
 .cell:focus::before {
   @include get-cell-size($focus-scale-factor);
-  border-width: 3px;
 }
 
 /* ************************************************ */
@@ -55,7 +54,7 @@ $focus-scale-factor: 1.4;
 .cell-none.hover:not(.drag-hover)::before,
 .cell-none:focus::before {
   @include get-cell-size(1);
-  border-width: 2px;
+  filter: none;
 }
 
 .cell-hospital::before {

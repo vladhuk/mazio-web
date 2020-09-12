@@ -61,10 +61,6 @@ $wall-width: $shape-length * $length-width-scale-factor;
   @include get-wall-size(h, $hover-scale-factor);
 }
 
-.wall:focus::before {
-  border-width: 2px;
-}
-
 .wall-v:focus::before {
   @include get-wall-size(v, $focus-scale-factor);
 }
@@ -80,11 +76,13 @@ $wall-width: $shape-length * $length-width-scale-factor;
 .wall-none::before {
   opacity: 0;
   cursor: default;
+  border: none;
 }
 
-.wall-none.drag-hover::before {
+.wall-none.hover.drag-hover::before {
   background: black;
   opacity: 0.4;
+  filter: none;
 }
 
 .wall-stone:before {
