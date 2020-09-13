@@ -31,8 +31,14 @@ module.exports = {
   rules: {
     'prettier/prettier': [WARN],
 
-    'no-use-before-define': [ERROR, { "functions": false }],
+    'no-use-before-define': [ERROR, { functions: false }],
     'no-unused-expressions': OFF,
+    'no-param-reassign': [
+      ERROR,
+      {
+        ignorePropertyModificationsFor: ['state'],
+      },
+    ],
 
     '@typescript-eslint/no-unused-expressions': 'error',
 
