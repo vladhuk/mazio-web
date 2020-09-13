@@ -10,6 +10,8 @@ import {
 } from '../../types/models/Maze/Structure';
 import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
+import MazeDropContextAndDragLayer from './MazeDropContextAndDragLayer';
+import MazeEditorDropContext from './MazeEditorDropContext';
 
 const MazeEditor: FunctionComponent = () => {
   const walls: Wall[] = [
@@ -53,13 +55,17 @@ const MazeEditor: FunctionComponent = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <MazeEditorContainer>
-        <Maze size={{ height: 7, width: 7 }} walls={walls} cells={cells} />
-        <MazeElementsMenu
-          cellTypes={cellTypesInMenu}
-          wallTypes={wallTypesInMenu}
-        />
-      </MazeEditorContainer>
+      <MazeEditorDropContext>
+        <MazeEditorContainer>
+          <MazeDropContextAndDragLayer>
+            <Maze size={{ height: 7, width: 7 }} walls={walls} cells={cells} />
+          </MazeDropContextAndDragLayer>
+          <MazeElementsMenu
+            cellTypes={cellTypesInMenu}
+            wallTypes={wallTypesInMenu}
+          />
+        </MazeEditorContainer>
+      </MazeEditorDropContext>
     </DndProvider>
   );
 };

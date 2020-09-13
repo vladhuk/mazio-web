@@ -53,10 +53,16 @@ export function buildElementDragOptions(
   { type, location }: MazeElement,
   ref: RefObject<HTMLDivElement>,
   draggedItemType: string,
-  noneElementType: string
+  noneElementType: string,
+  className: string
 ): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
   return {
-    item: { type: draggedItemType, elementType: type, location },
+    item: {
+      type: draggedItemType,
+      elementType: type,
+      location,
+      className,
+    },
     canDrag: type !== noneElementType,
     end: () => onDragEnd(ref),
   };
