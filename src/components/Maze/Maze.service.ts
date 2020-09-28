@@ -12,7 +12,7 @@ import {
 /**
  * Builds walls preset with only outside walls
  */
-function buildWallsPreset(mazeSize: Size): Wall[][] {
+export function buildWallsPreset(mazeSize: Size): Wall[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
 
   const walls: Wall[][] = range(1, wallsRowsQuantity - 1).map((y) => {
@@ -60,7 +60,7 @@ export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
 /**
  * Builds preset with emty cells
  */
-function buildCellsPreset(mazeSize: Size): Cell[][] {
+export function buildCellsPreset(mazeSize: Size): Cell[][] {
   return range(mazeSize.height).map((y) =>
     range(mazeSize.width).map((x) => ({
       location: { x, y },
