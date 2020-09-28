@@ -11,7 +11,7 @@ import {
 import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
 import MazeDropContextAndDragLayer from './MazeDropContextAndDragLayer';
-import MazeEditorDropContext from './MazeEditorDropContext';
+import MazeEditorDropContext from './MazeEditorDropContext/MazeEditorDropContext';
 
 const MazeEditor: FunctionComponent = () => {
   const walls: Wall[] = [
@@ -55,7 +55,8 @@ const MazeEditor: FunctionComponent = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <MazeEditorDropContext>
+      {/* TODO: Create function for removing */}
+      <MazeEditorDropContext removeElementFromMaze={() => ({})}>
         <MazeEditorContainer>
           <MazeDropContextAndDragLayer>
             <Maze size={{ height: 7, width: 7 }} walls={walls} cells={cells} />
