@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Row } from 'react-bootstrap';
 import { MazeElement, Wall as IWall } from '../../types/models/Maze/Structure';
-import Wall, { WallPosition } from '../MazeElements/Wall';
+import Wall, { WallPosition } from '../mazeElements/Wall';
 
 interface Props {
   wallsRow: IWall[];

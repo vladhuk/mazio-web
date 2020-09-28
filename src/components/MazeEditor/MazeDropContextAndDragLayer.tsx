@@ -5,7 +5,7 @@ import {
   MazeDragElement,
   MazeDropCollectedProps,
 } from '../../types/models/dnd/maze';
-import MazeElementDragLayer from '../MazeElements/MazeElementDragLayer';
+import MazeElementDragLayer from '../mazeElements/MazeElementDragLayer';
 
 const MazeDropContextAndDragLayer: FunctionComponent = ({ children }) => {
   const [{ isOver }, drop] = useDrop<

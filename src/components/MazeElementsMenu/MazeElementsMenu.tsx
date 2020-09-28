@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import Cell from '../MazeElements/Cell';
+import Cell from '../mazeElements/Cell';
 import { CellType, WallType } from '../../types/models/Maze/Structure';
 import ElementsContainer from './ElementsContainer';
 import ElementWrapper from './ElementWrapper';
-import Wall, { WallPosition } from '../MazeElements/Wall';
+import Wall, { WallPosition } from '../mazeElements/Wall';
 import Tooltip from '../Tooltip';
 import MazeElementsMenuContainer from './MazeElementsMenuContainer';
 
