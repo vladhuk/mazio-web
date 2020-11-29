@@ -1,19 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { Row } from 'react-bootstrap';
 import { range } from 'lodash';
-import {
-  Wall as IWall,
-  Cell as ICell,
-  MazeElement,
-} from '../../types/models/Maze/Structure';
+import IWall from '../../types/models/Maze/Structure/Wall';
+import ICell from '../../types/models/Maze/Structure/Cell';
 import Wall, { WallPosition } from '../mazeElements/Wall';
 import Cell from '../mazeElements/Cell';
+import MoveElement from '../../types/util/dnd/maze/MoveMazeElement';
 
 interface Props {
   wallsRow: IWall[];
   cellsRow: ICell[];
-  moveCell(source: MazeElement, target: MazeElement): void;
-  moveWall(source: MazeElement, target: MazeElement): void;
+  moveCell: MoveElement;
+  moveWall: MoveElement;
 }
 
 const MazeWallsAndCellsRow: FunctionComponent<Props> = ({

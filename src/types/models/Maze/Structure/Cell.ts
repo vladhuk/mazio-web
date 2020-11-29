@@ -1,4 +1,5 @@
-import { Location, MazeElement } from '.';
+import ElementLocation from './ElementLocation';
+import MazeElement from './MazeElement';
 
 export enum CellType {
   ARSENAL = 'ARSENAL',
@@ -17,7 +18,7 @@ export enum CellType {
   NONE = 'NONE',
 }
 
-export interface Cell extends MazeElement {
+export default interface Cell extends MazeElement {
   type: CellType;
-  ref?: Location;
+  ref?: ElementLocation;
 }

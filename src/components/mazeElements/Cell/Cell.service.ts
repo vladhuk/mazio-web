@@ -1,4 +1,4 @@
-import { CellType } from '../../../types/models/Maze/Structure';
+import { CellType } from '../../../types/models/Maze/Structure/Cell';
 
 // eslint-disable-next-line import/prefer-default-export
 export function getCssClassNameFromCellType(type: CellType): string {

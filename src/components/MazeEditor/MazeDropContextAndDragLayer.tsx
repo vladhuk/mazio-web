@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useDrop } from 'react-dnd';
 import { ItemType } from '../../constants';
-import {
-  MazeDragElement,
-  MazeDropCollectedProps,
-} from '../../types/util/dnd/maze';
+import MazeDragElement from '../../types/util/dnd/maze/MazeDragElement';
+import MazeDropCollectedProps from '../../types/util/dnd/maze/MazeDropCollectedProps';
 import MazeElementDragLayer from '../mazeElements/MazeElementDragLayer';
 
 const MazeDropContextAndDragLayer: FunctionComponent = ({ children }) => {

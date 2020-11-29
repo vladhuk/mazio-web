@@ -1,13 +1,10 @@
 import { range, concat, cloneDeep } from 'lodash';
-import {
-  Wall,
-  WallType,
-  Size,
-  Cell,
-  CellType,
-  Location,
-  MazeElement,
-} from '../../types/models/Maze/Structure';
+import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
+import ElementLocation from '../../types/models/Maze/Structure/ElementLocation';
+import MazeElement from '../../types/models/Maze/Structure/MazeElement';
+import Size from '../../types/models/Maze/Structure/Size';
+import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
+import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
 
 /**
  * Builds walls preset with only outside walls
@@ -82,8 +79,8 @@ export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
 
 export function swapElements<T extends MazeElement>(
   elements: T[][],
-  loc1: Location,
-  loc2: Location
+  loc1: ElementLocation,
+  loc2: ElementLocation
 ): T[][] {
   const newRows = cloneDeep(elements);
   newRows[loc1.y][loc1.x].type = elements[loc2.y][loc2.x].type;
@@ -94,7 +91,7 @@ export function swapElements<T extends MazeElement>(
 export function addElement<T extends MazeElement>(
   elements: T[][],
   sourceElementType: string,
-  targetElementLocation: Location
+  targetElementLocation: ElementLocation
 ): T[][] {
   const newRows = cloneDeep(elements);
   const { x, y } = targetElementLocation;
@@ -109,7 +106,7 @@ export function addElement<T extends MazeElement>(
 export function bindMoveOrAddElement<T extends MazeElement>(
   elementsState: T[][],
   setElementsState: (newState: T[][]) => void
-): (source: MazeElement, target: MazeElement) => void {
+): MoveMazeElement {
   return (source: MazeElement, target: MazeElement) => {
     const newRows =
       source.location.x < 0

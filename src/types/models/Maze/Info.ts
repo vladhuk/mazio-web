@@ -1,4 +1,4 @@
-export interface Info {
+export default interface Info {
   knife: boolean;
   bullets: number;
   bulletsOnStart: number;

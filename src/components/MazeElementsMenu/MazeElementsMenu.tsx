@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import Cell from '../mazeElements/Cell';
-import { CellType, WallType } from '../../types/models/Maze/Structure';
 import ElementsContainer from './ElementsContainer';
 import ElementWrapper from './ElementWrapper';
 import Wall, { WallPosition } from '../mazeElements/Wall';
 import Tooltip from '../Tooltip';
 import MazeElementsMenuContainer from './MazeElementsMenuContainer';
+import { CellType } from '../../types/models/Maze/Structure/Cell';
+import { WallType } from '../../types/models/Maze/Structure/Wall';
 
 interface Props {
   cellTypes: CellType[];

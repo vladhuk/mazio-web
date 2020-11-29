@@ -2,16 +2,12 @@ import React, { FunctionComponent } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Maze from '../Maze';
-import {
-  Wall,
-  WallType,
-  Cell,
-  CellType,
-} from '../../types/models/Maze/Structure';
 import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
 import MazeDropContextAndDragLayer from './MazeDropContextAndDragLayer';
 import MazeEditorDropContext from './MazeEditorDropContext/MazeEditorDropContext';
+import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
+import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 
 const MazeEditor: FunctionComponent = () => {
   const walls: Wall[] = [

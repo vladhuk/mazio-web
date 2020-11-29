@@ -4,13 +4,10 @@ import {
   getCssClassNameFromWallType,
   getCssClassNameFromWallPosition,
 } from './Wall.service';
-import {
-  MazeElement,
-  Wall as IWall,
-  WallType,
-} from '../../../types/models/Maze/Structure';
+import IWall, { WallType } from '../../../types/models/Maze/Structure/Wall';
 import { ItemType } from '../../../constants';
 import MoveableMazeElement from '../MoveableMazeElement';
+import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
 
 export enum WallPosition {
   HORIZONTAL,
@@ -20,7 +17,7 @@ export enum WallPosition {
 interface Props {
   position: WallPosition;
   wall: IWall;
-  moveWall?: (source: MazeElement, target: MazeElement) => void;
+  moveWall?: MoveMazeElement;
 }
 
 const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {

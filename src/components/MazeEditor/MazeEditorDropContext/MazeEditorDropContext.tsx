@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { useDrop } from 'react-dnd';
-import { MazeDragElement } from '../../../types/util/dnd/maze';
-import { MazeElement } from '../../../types/models/Maze/Structure';
+import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import RemoveMazeElement from '../../../types/util/dnd/maze/RemoveMazeElement';
 import { buildMazeEditorDropContextOptions } from './MazeEditorDropContext.service';
 
 interface Props {
-  removeElementFromMaze(element: MazeElement): void;
+  removeElementFromMaze: RemoveMazeElement;
 }
 
 const MazeEditorDropContext: FunctionComponent<Props> = ({

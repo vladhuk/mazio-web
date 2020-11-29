@@ -1,5 +1,5 @@
+import { WallType } from '../../../types/models/Maze/Structure/Wall';
 import { WallPosition } from './Wall';
-import { WallType } from '../../../types/models/Maze/Structure';
 
 export function getCssClassNameFromWallPosition(
   position: WallPosition

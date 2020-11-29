@@ -1,8 +1,8 @@
 import { DragObjectWithType } from 'react-dnd';
-import { Location } from '../../../models/Maze/Structure/Location';
+import ElementLocation from '../../../models/Maze/Structure/ElementLocation';
 
-export interface MazeDragElement extends DragObjectWithType {
+export default interface MazeDragElement extends DragObjectWithType {
   elementType: string;
-  location: Location;
+  location: ElementLocation;
   className: string;
 }

@@ -4,17 +4,16 @@ import {
   DropTargetHookSpec,
   DragSourceHookSpec,
 } from 'react-dnd';
-import {
-  MazeDragElement,
-  MazeDropCollectedProps,
-} from '../../../types/util/dnd/maze';
-import { MazeElement } from '../../../types/models/Maze/Structure';
+import MazeElement from '../../../types/models/Maze/Structure/MazeElement';
+import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
+import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
 
 function onDrop(
   ref: RefObject<HTMLDivElement>,
   draggedItem: MazeDragElement,
   droppableElement: MazeElement,
-  moveElement: (source: MazeElement, target: MazeElement) => void
+  moveElement: MoveMazeElement
 ): void {
   const sourceElement = {
     type: draggedItem.elementType,
@@ -34,7 +33,7 @@ export function buildElementDropOptions(
   droppableItemType: string,
   ref: RefObject<HTMLDivElement>,
   droppableElement: MazeElement,
-  moveElement: (source: MazeElement, target: MazeElement) => void
+  moveElement: MoveMazeElement
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
     accept: droppableItemType,

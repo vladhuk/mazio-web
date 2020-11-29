@@ -1,3 +1,3 @@
-export interface MazeDropCollectedProps {
+export default interface MazeDropCollectedProps {
   isOver: boolean;
 }

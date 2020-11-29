@@ -1,6 +1,6 @@
-import { Location } from '.';
+import ElementLocation from './ElementLocation';
 
-export interface MazeElement {
-  location: Location;
+export default interface MazeElement {
+  location: ElementLocation;
   type: string;
 }

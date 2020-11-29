@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { Row } from 'react-bootstrap';
-import { MazeElement, Wall as IWall } from '../../types/models/Maze/Structure';
 import Wall, { WallPosition } from '../mazeElements/Wall';
+import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
+import IWall from '../../types/models/Maze/Structure/Wall';
 
 interface Props {
   wallsRow: IWall[];
-  moveWall(source: MazeElement, target: MazeElement): void;
+  moveWall: MoveMazeElement;
 }
 
 const MazeWallsRow: FunctionComponent<Props> = ({ wallsRow, moveWall }) => {

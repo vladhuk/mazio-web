@@ -1,14 +1,12 @@
 import { DropTargetHookSpec } from 'react-dnd';
 import { ItemType } from '../../../constants';
-import {
-  MazeDragElement,
-  MazeDropCollectedProps,
-} from '../../../types/util/dnd/maze';
-import { MazeElement } from '../../../types/models/Maze/Structure';
+import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
+import RemoveMazeElement from '../../../types/util/dnd/maze/RemoveMazeElement';
 
 // eslint-disable-next-line import/prefer-default-export
 export function buildMazeEditorDropContextOptions(
-  removeElement: (element: MazeElement) => void
+  removeElement: RemoveMazeElement
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
     accept: [ItemType.MAZE_CELL, ItemType.MAZE_WALL],
