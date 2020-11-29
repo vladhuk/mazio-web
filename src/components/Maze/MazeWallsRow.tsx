@@ -6,7 +6,7 @@ import IWall from '../../types/models/Maze/Structure/Wall';
 
 interface Props {
   wallsRow: IWall[];
-  moveWall: MoveMazeElement;
+  moveWall?: MoveMazeElement;
 }
 
 const MazeWallsRow: FunctionComponent<Props> = ({ wallsRow, moveWall }) => {

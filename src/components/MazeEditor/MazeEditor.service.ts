@@ -1,4 +1,4 @@
-import { range, concat, cloneDeep } from 'lodash';
+import { cloneDeep, concat, range } from 'lodash';
 import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
 import ElementLocation from '../../types/models/Maze/Structure/ElementLocation';
 import MazeElement from '../../types/models/Maze/Structure/MazeElement';
@@ -6,10 +6,21 @@ import Size from '../../types/models/Maze/Structure/Size';
 import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
 
+export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
+  const preset = buildWallsPreset(mazeSize);
+
+  walls.forEach((wall) => {
+    const { x, y } = wall.location;
+    preset[y][x].type = wall.type;
+  });
+
+  return preset;
+}
+
 /**
  * Builds walls preset with only outside walls
  */
-export function buildWallsPreset(mazeSize: Size): Wall[][] {
+function buildWallsPreset(mazeSize: Size): Wall[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
 
   const walls: Wall[][] = range(1, wallsRowsQuantity - 1).map((y) => {
@@ -43,29 +54,6 @@ export function buildWallsPreset(mazeSize: Size): Wall[][] {
   ];
 }
 
-export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
-  const preset = buildWallsPreset(mazeSize);
-
-  walls.forEach((wall) => {
-    const { x, y } = wall.location;
-    preset[y][x].type = wall.type;
-  });
-
-  return preset;
-}
-
-/**
- * Builds preset with emty cells
- */
-export function buildCellsPreset(mazeSize: Size): Cell[][] {
-  return range(mazeSize.height).map((y) =>
-    range(mazeSize.width).map((x) => ({
-      location: { x, y },
-      type: CellType.NONE,
-    }))
-  );
-}
-
 export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
   const preset = buildCellsPreset(mazeSize);
 
@@ -77,26 +65,16 @@ export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
   return preset;
 }
 
-export function swapElements<T extends MazeElement>(
-  elements: T[][],
-  loc1: ElementLocation,
-  loc2: ElementLocation
-): T[][] {
-  const newRows = cloneDeep(elements);
-  newRows[loc1.y][loc1.x].type = elements[loc2.y][loc2.x].type;
-  newRows[loc2.y][loc2.x].type = elements[loc1.y][loc1.x].type;
-  return newRows;
-}
-
-export function addElement<T extends MazeElement>(
-  elements: T[][],
-  sourceElementType: string,
-  targetElementLocation: ElementLocation
-): T[][] {
-  const newRows = cloneDeep(elements);
-  const { x, y } = targetElementLocation;
-  newRows[y][x].type = sourceElementType;
-  return newRows;
+/**
+ * Builds preset with emty cells
+ */
+function buildCellsPreset(mazeSize: Size): Cell[][] {
+  return range(mazeSize.height).map((y) =>
+    range(mazeSize.width).map((x) => ({
+      location: { x, y },
+      type: CellType.NONE,
+    }))
+  );
 }
 
 /**
@@ -114,4 +92,26 @@ export function bindMoveOrAddElement<T extends MazeElement>(
         : swapElements(elementsState, source.location, target.location);
     setElementsState(newRows);
   };
+}
+
+function addElement<T extends MazeElement>(
+  elements: T[][],
+  sourceElementType: string,
+  targetElementLocation: ElementLocation
+): T[][] {
+  const newRows = cloneDeep(elements);
+  const { x, y } = targetElementLocation;
+  newRows[y][x].type = sourceElementType;
+  return newRows;
+}
+
+function swapElements<T extends MazeElement>(
+  elements: T[][],
+  loc1: ElementLocation,
+  loc2: ElementLocation
+): T[][] {
+  const newRows = cloneDeep(elements);
+  newRows[loc1.y][loc1.x].type = elements[loc2.y][loc2.x].type;
+  newRows[loc2.y][loc2.x].type = elements[loc1.y][loc1.x].type;
+  return newRows;
 }

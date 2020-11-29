@@ -10,8 +10,8 @@ import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
 interface Props {
   wallsRow: IWall[];
   cellsRow: ICell[];
-  moveCell: MoveMazeElement;
-  moveWall: MoveMazeElement;
+  moveCell?: MoveMazeElement;
+  moveWall?: MoveMazeElement;
 }
 
 const MazeWallsAndCellsRow: FunctionComponent<Props> = ({

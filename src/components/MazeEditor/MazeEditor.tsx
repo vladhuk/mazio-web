@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Maze from '../Maze';
@@ -8,46 +8,43 @@ import MazeDropContextAndDragLayer from './MazeDropContextAndDragLayer';
 import MazeEditorDropContext from './MazeEditorDropContext/MazeEditorDropContext';
 import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
 import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
+import {
+  buildWalls,
+  buildCells,
+  bindMoveOrAddElement,
+} from './MazeEditor.service';
+import Size from '../../types/models/Maze/Structure/Size';
+import { menuCellTypes, menuWallTypes } from './menuMazeElementsTypes';
+
+const demoWalls: Wall[] = [
+  { location: { x: 4, y: 0 }, type: WallType.OUTPUT },
+  { location: { x: 3, y: 3 }, type: WallType.STONE },
+  { location: { x: 3, y: 4 }, type: WallType.RUBBER },
+  { location: { x: 3, y: 5 }, type: WallType.TRANSLUCENT },
+];
+
+const demoCells: Cell[] = [
+  { location: { x: 0, y: 0 }, type: CellType.SPAWN },
+  { location: { x: 1, y: 0 }, type: CellType.TREASURE },
+  { location: { x: 2, y: 0 }, type: CellType.FAKE_TREASURE },
+  { location: { x: 3, y: 0 }, type: CellType.HOSPITAL },
+  { location: { x: 4, y: 0 }, type: CellType.ARSENAL },
+  { location: { x: 5, y: 0 }, type: CellType.RIVER_START },
+  { location: { x: 6, y: 0 }, type: CellType.RIVER },
+  { location: { x: 0, y: 1 }, type: CellType.RIVER_END },
+  { location: { x: 1, y: 1 }, type: CellType.TRAP },
+  { location: { x: 2, y: 1 }, type: CellType.PIT_IN },
+  { location: { x: 3, y: 1 }, type: CellType.PIT_OUT },
+];
+
+const mazeSize: Size = { height: 7, width: 7 };
 
 const MazeEditor: FunctionComponent = () => {
-  const walls: Wall[] = [
-    { location: { x: 4, y: 0 }, type: WallType.OUTPUT },
-    { location: { x: 3, y: 3 }, type: WallType.STONE },
-    { location: { x: 3, y: 4 }, type: WallType.RUBBER },
-    { location: { x: 3, y: 5 }, type: WallType.TRANSLUCENT },
-  ];
+  const [wallsRows, setWallsRows] = useState(buildWalls(mazeSize, demoWalls));
+  const [cellsRows, setCellsRows] = useState(buildCells(mazeSize, demoCells));
 
-  const cells: Cell[] = [
-    { location: { x: 0, y: 0 }, type: CellType.SPAWN },
-    { location: { x: 1, y: 0 }, type: CellType.TREASURE },
-    { location: { x: 2, y: 0 }, type: CellType.FAKE_TREASURE },
-    { location: { x: 3, y: 0 }, type: CellType.HOSPITAL },
-    { location: { x: 4, y: 0 }, type: CellType.ARSENAL },
-    { location: { x: 5, y: 0 }, type: CellType.RIVER_START },
-    { location: { x: 6, y: 0 }, type: CellType.RIVER },
-    { location: { x: 0, y: 1 }, type: CellType.RIVER_END },
-    { location: { x: 1, y: 1 }, type: CellType.TRAP },
-    { location: { x: 2, y: 1 }, type: CellType.PIT_IN },
-    { location: { x: 3, y: 1 }, type: CellType.PIT_OUT },
-  ];
-
-  const cellTypesInMenu = [
-    CellType.SPAWN,
-    CellType.ARSENAL,
-    CellType.HOSPITAL,
-    CellType.TREASURE,
-    CellType.FAKE_TREASURE,
-    CellType.TRAP,
-    CellType.PIT_IN,
-    CellType.RIVER_START,
-  ];
-
-  const wallTypesInMenu = [
-    WallType.OUTPUT,
-    WallType.STONE,
-    WallType.RUBBER,
-    WallType.TRANSLUCENT,
-  ];
+  const moveWall = bindMoveOrAddElement(wallsRows, setWallsRows);
+  const moveCell = bindMoveOrAddElement(cellsRows, setCellsRows);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -55,11 +52,16 @@ const MazeEditor: FunctionComponent = () => {
       <MazeEditorDropContext removeElementFromMaze={() => ({})}>
         <MazeEditorContainer>
           <MazeDropContextAndDragLayer>
-            <Maze size={{ height: 7, width: 7 }} walls={walls} cells={cells} />
+            <Maze
+              wallsRows={wallsRows}
+              cellsRows={cellsRows}
+              moveWall={moveWall}
+              moveCell={moveCell}
+            />
           </MazeDropContextAndDragLayer>
           <MazeElementsMenu
-            cellTypes={cellTypesInMenu}
-            wallTypes={wallTypesInMenu}
+            cellTypes={menuCellTypes}
+            wallTypes={menuWallTypes}
           />
         </MazeEditorContainer>
       </MazeEditorDropContext>
