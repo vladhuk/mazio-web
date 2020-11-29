@@ -5,13 +5,13 @@ import IWall from '../../types/models/Maze/Structure/Wall';
 import ICell from '../../types/models/Maze/Structure/Cell';
 import Wall, { WallPosition } from '../mazeElements/Wall';
 import Cell from '../mazeElements/Cell';
-import MoveElement from '../../types/util/dnd/maze/MoveMazeElement';
+import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
 
 interface Props {
   wallsRow: IWall[];
   cellsRow: ICell[];
-  moveCell: MoveElement;
-  moveWall: MoveElement;
+  moveCell: MoveMazeElement;
+  moveWall: MoveMazeElement;
 }
 
 const MazeWallsAndCellsRow: FunctionComponent<Props> = ({
