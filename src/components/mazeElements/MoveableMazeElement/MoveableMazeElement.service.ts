@@ -7,7 +7,7 @@ import {
 import {
   MazeDragElement,
   MazeDropCollectedProps,
-} from '../../../types/models/dnd/maze';
+} from '../../../types/util/dnd/maze';
 import { MazeElement } from '../../../types/models/Maze/Structure';
 
 function onDrop(

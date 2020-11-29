@@ -4,7 +4,7 @@ import { ItemType } from '../../constants';
 import {
   MazeDragElement,
   MazeDropCollectedProps,
-} from '../../types/models/dnd/maze';
+} from '../../types/util/dnd/maze';
 import MazeElementDragLayer from '../mazeElements/MazeElementDragLayer';
 
 const MazeDropContextAndDragLayer: FunctionComponent = ({ children }) => {

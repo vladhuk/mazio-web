@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useDrop } from 'react-dnd';
-import { MazeDragElement } from '../../../types/models/dnd/maze';
+import { MazeDragElement } from '../../../types/util/dnd/maze';
 import { MazeElement } from '../../../types/models/Maze/Structure';
 import { buildMazeEditorDropContextOptions } from './MazeEditorDropContext.service';
 

@@ -5,7 +5,7 @@ import { MazeElement as IMazeElement } from '../../../types/models/Maze/Structur
 import {
   MazeDragElement,
   MazeDropCollectedProps,
-} from '../../../types/models/dnd/maze';
+} from '../../../types/util/dnd/maze';
 import { buildElementDropOptions } from './MoveableMazeElement.service';
 import MazeElement from '../MazeElement';
 

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useDragLayer } from 'react-dnd';
-import DragLayerCollectedProps from '../../../types/models/dnd/DragLayerCollectedProps';
-import { MazeDragElement } from '../../../types/models/dnd/maze';
+import DragLayerCollectedProps from '../../../types/util/dnd/DragLayerCollectedProps';
+import { MazeDragElement } from '../../../types/util/dnd/maze';
 import MazeElement from '../MazeElement';
 import './MazeElementDragLayer.scss';
 import { getItemStyles } from './MazeElementDragLayer.service';

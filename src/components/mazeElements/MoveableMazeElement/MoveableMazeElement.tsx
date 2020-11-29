@@ -3,7 +3,7 @@ import '../MazeElement/MazeElement.scss';
 import { useDrag } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { MazeElement as IMazeElement } from '../../../types/models/Maze/Structure';
-import { MazeDragElement } from '../../../types/models/dnd/maze';
+import { MazeDragElement } from '../../../types/util/dnd/maze';
 import { buildElementDragOptions } from './MoveableMazeElement.service';
 import MazeElement from '../MazeElement';
 import DroppableMazeElement from './DroppableMazeElement';

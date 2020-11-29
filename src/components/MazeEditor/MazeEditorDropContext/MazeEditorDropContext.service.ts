@@ -3,7 +3,7 @@ import { ItemType } from '../../../constants';
 import {
   MazeDragElement,
   MazeDropCollectedProps,
-} from '../../../types/models/dnd/maze';
+} from '../../../types/util/dnd/maze';
 import { MazeElement } from '../../../types/models/Maze/Structure';
 
 // eslint-disable-next-line import/prefer-default-export
