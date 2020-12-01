@@ -31,7 +31,7 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
       className={className}
       element={wall}
       dragItemType={ItemType.MAZE_WALL}
-      dragItemNoneTypes={[WallType.NONE]}
+      dragItemNoneTypes={[WallType.NONE, WallType.EXTERNAL]}
       moveElement={moveWall}
     />
   );

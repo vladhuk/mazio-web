@@ -85,6 +85,25 @@ $wall-width: $shape-length * $length-width-scale-factor;
       filter: none;
     }
   }
+
+  &-external { 
+    &:before {
+      background: #cb1910;
+      cursor: default;
+    }
+
+    &.wall-v.hover:not(.drag-hover)::before,
+    &.wall-v:focus::before {
+      @include get-wall-size(v, 1);
+      filter: none;
+    }
+    &.wall-h.hover:not(.drag-hover)::before,
+    &.wall-h:focus::before {
+      @include get-wall-size(h, 1);
+      filter: none;
+    }
+  }
+
   
   &-stone:before {
     background: #b29832;
@@ -100,9 +119,5 @@ $wall-width: $shape-length * $length-width-scale-factor;
   
   &-translucent:before {
     background: #69dcff;
-  }
-  
-  &-external:before {
-    background: #cb1910;
   }
 }
