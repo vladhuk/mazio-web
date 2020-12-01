@@ -108,6 +108,9 @@ function validateMoving<T extends MazeElement>(source: T, target: T): boolean {
   if (source.type !== WallType.OUTPUT && target.type === WallType.EXTERNAL) {
     return false;
   }
+  if (target.type === WallType.OUTPUT) {
+    return false;
+  }
 
   return true;
 }
