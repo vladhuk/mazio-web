@@ -1,3 +1,4 @@
+import UnidentifiedWallTypeError from '../../../errors/UnidentifiedWallTypeError';
 import { WallType } from '../../../types/models/Maze/Structure/Wall';
 import { WallPosition } from './Wall';
 
@@ -20,7 +21,8 @@ export function getCssClassNameFromWallType(type: WallType): string {
     case WallType.EXTERNAL:
       return 'wall-external';
     case WallType.NONE:
-    default:
       return 'wall-none';
+    default:
+      throw new UnidentifiedWallTypeError(type);
   }
 }

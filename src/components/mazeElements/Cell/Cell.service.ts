@@ -1,3 +1,4 @@
+import UnidentifiedCellTypeError from '../../../errors/UnidentifiedCellTypeError';
 import { CellType } from '../../../types/models/Maze/Structure/Cell';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -26,7 +27,8 @@ export function getCssClassNameFromCellType(type: CellType): string {
     case CellType.PIT_OUT:
       return 'cell-pit-out';
     case CellType.NONE:
-    default:
       return 'cell-none';
+    default:
+      throw new UnidentifiedCellTypeError(type);
   }
 }
