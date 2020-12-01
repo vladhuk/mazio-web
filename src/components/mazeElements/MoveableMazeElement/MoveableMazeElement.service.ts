@@ -9,6 +9,20 @@ import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
 import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
 
+export function buildElementDropOptions(
+  droppableItemType: string,
+  ref: RefObject<HTMLDivElement>,
+  droppableElement: MazeElement,
+  moveElement: MoveMazeElement
+): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
+  return {
+    accept: droppableItemType,
+    drop: (draggedItem) =>
+      onDrop(ref, draggedItem, droppableElement, moveElement),
+    collect: collectDragProps,
+  };
+}
+
 function onDrop(
   ref: RefObject<HTMLDivElement>,
   draggedItem: MazeDragElement,
@@ -29,25 +43,6 @@ function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
   };
 }
 
-export function buildElementDropOptions(
-  droppableItemType: string,
-  ref: RefObject<HTMLDivElement>,
-  droppableElement: MazeElement,
-  moveElement: MoveMazeElement
-): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
-  return {
-    accept: droppableItemType,
-    drop: (draggedItem) =>
-      onDrop(ref, draggedItem, droppableElement, moveElement),
-    collect: collectDragProps,
-  };
-}
-
-function onDragEnd(ref: RefObject<HTMLDivElement>): void {
-  ref?.current?.blur();
-  ref?.current?.classList.remove('hover');
-}
-
 export function buildElementDragOptions(
   { type, location }: MazeElement,
   ref: RefObject<HTMLDivElement>,
@@ -65,4 +60,9 @@ export function buildElementDragOptions(
     canDrag: !dragItemNoneTypes.includes(type),
     end: () => onDragEnd(ref),
   };
+}
+
+function onDragEnd(ref: RefObject<HTMLDivElement>): void {
+  ref?.current?.blur();
+  ref?.current?.classList.remove('hover');
 }
