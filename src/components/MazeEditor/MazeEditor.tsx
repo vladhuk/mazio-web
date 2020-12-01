@@ -11,7 +11,8 @@ import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 import {
   buildWalls,
   buildCells,
-  bindMoveOrAddElement,
+  bindMoveOrAddMazeElement,
+  bindRemoveMazeElement,
 } from './MazeEditor.service';
 import Size from '../../types/models/Maze/Structure/Size';
 import { menuCellTypes, menuWallTypes } from './menuMazeElementsTypes';
@@ -43,13 +44,15 @@ const MazeEditor: FunctionComponent = () => {
   const [wallsRows, setWallsRows] = useState(buildWalls(mazeSize, demoWalls));
   const [cellsRows, setCellsRows] = useState(buildCells(mazeSize, demoCells));
 
-  const moveWall = bindMoveOrAddElement(wallsRows, setWallsRows);
-  const moveCell = bindMoveOrAddElement(cellsRows, setCellsRows);
+  const moveWall = bindMoveOrAddMazeElement(wallsRows, setWallsRows);
+  const moveCell = bindMoveOrAddMazeElement(cellsRows, setCellsRows);
+
+  const removeWall = bindRemoveMazeElement(wallsRows, setWallsRows);
+  const removeCell = bindRemoveMazeElement(cellsRows, setCellsRows);
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {/* TODO: Create function for removing */}
-      <MazeEditorDropContext removeElementFromMaze={() => ({})}>
+      <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell}>
         <MazeEditorContainer>
           <MazeDropContextAndDragLayer>
             <Maze

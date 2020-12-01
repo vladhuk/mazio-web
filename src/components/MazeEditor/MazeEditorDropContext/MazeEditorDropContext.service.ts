@@ -6,12 +6,13 @@ import RemoveMazeElement from '../../../types/util/dnd/maze/RemoveMazeElement';
 
 // eslint-disable-next-line import/prefer-default-export
 export function buildMazeEditorDropContextOptions(
-  removeElement: RemoveMazeElement
+  getRemoveElement: (itemType: string) => RemoveMazeElement | undefined
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
     accept: [ItemType.MAZE_CELL, ItemType.MAZE_WALL],
     drop: (item, monitor) => {
-      if (monitor.isOver({ shallow: true })) {
+      const removeElement = getRemoveElement(item.type.toString());
+      if (removeElement && monitor.isOver({ shallow: true })) {
         removeElement({
           type: item.elementType,
           location: item.location,

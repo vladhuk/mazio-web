@@ -1,10 +1,13 @@
 import { cloneDeep, concat, range } from 'lodash';
 import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
 import ElementLocation from '../../types/models/Maze/Structure/ElementLocation';
-import MazeElement from '../../types/models/Maze/Structure/MazeElement';
+import MazeElement, {
+  MazeElementType,
+} from '../../types/models/Maze/Structure/MazeElement';
 import Size from '../../types/models/Maze/Structure/Size';
 import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
+import RemoveMazeElement from '../../types/util/dnd/maze/RemoveMazeElement';
 
 export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
   const preset = buildWallsPreset(mazeSize);
@@ -81,20 +84,20 @@ function buildCellsPreset(mazeSize: Size): Cell[][] {
  * Swap elements if both of them inside maze. Copy element to maze if source
  * element outside maze.
  */
-export function bindMoveOrAddElement<T extends MazeElement>(
+export function bindMoveOrAddMazeElement<T extends MazeElement>(
   elementsState: T[][],
   setElementsState: (newState: T[][]) => void
 ): MoveMazeElement {
   return (source: MazeElement, target: MazeElement) => {
     const newRows =
       source.location.x < 0
-        ? addElement(elementsState, source.type, target.location)
-        : swapElements(elementsState, source.location, target.location);
+        ? addMazeElement(elementsState, source.type, target.location)
+        : swapMazeElements(elementsState, source.location, target.location);
     setElementsState(newRows);
   };
 }
 
-function addElement<T extends MazeElement>(
+function addMazeElement<T extends MazeElement>(
   elements: T[][],
   sourceElementType: string,
   targetElementLocation: ElementLocation
@@ -105,7 +108,7 @@ function addElement<T extends MazeElement>(
   return newRows;
 }
 
-function swapElements<T extends MazeElement>(
+function swapMazeElements<T extends MazeElement>(
   elements: T[][],
   loc1: ElementLocation,
   loc2: ElementLocation
@@ -114,4 +117,15 @@ function swapElements<T extends MazeElement>(
   newRows[loc1.y][loc1.x].type = elements[loc2.y][loc2.x].type;
   newRows[loc2.y][loc2.x].type = elements[loc1.y][loc1.x].type;
   return newRows;
+}
+
+export function bindRemoveMazeElement<T extends MazeElement>(
+  elementsState: T[][],
+  setElementsState: (newState: T[][]) => void
+): RemoveMazeElement {
+  return (element) => {
+    const newRows = cloneDeep(elementsState);
+    newRows[element.location.y][element.location.x].type = MazeElementType.NONE;
+    setElementsState(newRows);
+  };
 }
