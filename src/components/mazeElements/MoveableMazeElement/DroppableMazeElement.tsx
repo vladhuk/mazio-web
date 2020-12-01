@@ -11,7 +11,6 @@ import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollect
 interface Props {
   element: IMazeElement;
   dragItemType: string;
-  dragItemNoneType: string;
   className?: string;
   moveElement: MoveMazeElement;
 }

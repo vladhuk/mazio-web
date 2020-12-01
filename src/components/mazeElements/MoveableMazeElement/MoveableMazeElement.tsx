@@ -48,7 +48,6 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
       className={className}
       element={element}
       dragItemType={dragItemType}
-      dragItemNoneType={dragItemNoneType}
       moveElement={moveElement}
     />
   ) : (
