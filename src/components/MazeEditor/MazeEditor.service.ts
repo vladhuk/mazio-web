@@ -88,13 +88,28 @@ export function bindMoveOrAddMazeElement<T extends MazeElement>(
   elementsState: T[][],
   setElementsState: (newState: T[][]) => void
 ): MoveMazeElement {
-  return (source: MazeElement, target: MazeElement) => {
+  return (source, target) => {
+    if (!validateMoving(source, target)) {
+      return;
+    }
+
     const newRows =
       source.location.x < 0
         ? addMazeElement(elementsState, source.type, target.location)
         : swapMazeElements(elementsState, source.location, target.location);
     setElementsState(newRows);
   };
+}
+
+function validateMoving<T extends MazeElement>(source: T, target: T): boolean {
+  if (source.type === WallType.OUTPUT && target.type !== WallType.EXTERNAL) {
+    return false;
+  }
+  if (source.type !== WallType.OUTPUT && target.type === WallType.EXTERNAL) {
+    return false;
+  }
+
+  return true;
 }
 
 function addMazeElement<T extends MazeElement>(
