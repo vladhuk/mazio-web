@@ -19,7 +19,7 @@ const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
       className={`cell ${cellTypeClassName}`}
       element={cell}
       dragItemType={ItemType.MAZE_CELL}
-      dragItemNoneType={CellType.NONE}
+      dragItemNoneTypes={[CellType.NONE]}
       moveElement={moveCell}
     />
   );

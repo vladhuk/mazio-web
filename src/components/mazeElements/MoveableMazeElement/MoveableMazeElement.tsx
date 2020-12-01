@@ -12,7 +12,7 @@ import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
 interface Props {
   element: IMazeElement;
   dragItemType: string;
-  dragItemNoneType: string;
+  dragItemNoneTypes: string[];
   className?: string;
   moveElement?: MoveMazeElement;
 }
@@ -20,7 +20,7 @@ interface Props {
 const MoveableMazeElement: FunctionComponent<Props> = ({
   element,
   dragItemType,
-  dragItemNoneType,
+  dragItemNoneTypes,
   className,
   moveElement,
 }) => {
@@ -31,7 +31,7 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
       element,
       ref,
       dragItemType,
-      dragItemNoneType,
+      dragItemNoneTypes,
       className || ''
     )
   );
