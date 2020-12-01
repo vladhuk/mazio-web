@@ -140,7 +140,16 @@ export function bindRemoveMazeElement<T extends MazeElement>(
 ): RemoveMazeElement {
   return (element) => {
     const newRows = cloneDeep(elementsState);
-    newRows[element.location.y][element.location.x].type = MazeElementType.NONE;
+    const newElement = newRows[element.location.y][element.location.x];
+    newElement.type = getPlaceholderForRemovedElement(element.type);
     setElementsState(newRows);
   };
+}
+
+function getPlaceholderForRemovedElement(removedElementType: string): string {
+  if (removedElementType === WallType.OUTPUT) {
+    return WallType.EXTERNAL;
+  }
+
+  return MazeElementType.NONE;
 }
