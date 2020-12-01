@@ -1,7 +1,7 @@
 import ElementLocation from './ElementLocation';
-import MazeElement from './MazeElement';
+import MazeElement, { MazeElementType } from './MazeElement';
 
-export enum CellType {
+enum CellBaseType {
   ARSENAL = 'ARSENAL',
   HOSPITAL = 'HOSPITAL',
   TREASURE = 'TREASURE',
@@ -13,10 +13,10 @@ export enum CellType {
   TRAP = 'TRAP',
   PIT_IN = 'PIT_IN',
   PIT_OUT = 'PIT_OUT',
-
-  /* Does not exist in server model */
-  NONE = 'NONE',
 }
+
+export const CellType = { ...CellBaseType, ...MazeElementType };
+export type CellType = CellBaseType | MazeElementType;
 
 export default interface Cell extends MazeElement {
   type: CellType;

@@ -1,15 +1,17 @@
-import MazeElement from './MazeElement';
+import MazeElement, { MazeElementType } from './MazeElement';
 
-export enum WallType {
+enum WallBaseType {
   STONE = 'STONE',
   RUBBER = 'RUBBER',
   TRANSLUCENT = 'TRANSLUCENT',
   OUTPUT = 'OUTPUT',
 
   /* Does not exist in server model */
-  NONE = 'NONE',
   EXTERNAL = 'EXTERNAL',
 }
+
+export const WallType = { ...WallBaseType, ...MazeElementType };
+export type WallType = WallBaseType | MazeElementType;
 
 export default interface Wall extends MazeElement {
   type: WallType;
