@@ -8,17 +8,18 @@ import MazeElement from '../../../types/models/Maze/Structure/MazeElement';
 import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
 import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
+import MazeElementMovingValidator from '../../../types/util/validators/maze/MazeElementMovingValidator';
 
 export function buildElementDropOptions(
   droppableItemType: string,
   ref: RefObject<HTMLDivElement>,
   droppableElement: MazeElement,
-  moveElement: MoveMazeElement
+  getMoveElement: (sourceType: string) => MoveMazeElement | undefined
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
     accept: droppableItemType,
     drop: (draggedItem) =>
-      onDrop(ref, draggedItem, droppableElement, moveElement),
+      onDrop(ref, draggedItem, droppableElement, getMoveElement),
     collect: collectDragProps,
   };
 }
@@ -27,19 +28,28 @@ function onDrop(
   ref: RefObject<HTMLDivElement>,
   draggedItem: MazeDragElement,
   droppableElement: MazeElement,
-  moveElement: MoveMazeElement
+  getMoveElement: (sourceType: string) => MoveMazeElement | undefined
 ): void {
-  const sourceElement = {
-    type: draggedItem.elementType,
-    location: draggedItem.location,
+  const sourceElement = mapItemToMazeElement(draggedItem);
+  const moveElement = getMoveElement(sourceElement.type);
+
+  if (moveElement) {
+    moveElement(sourceElement, droppableElement);
+    setTimeout(() => ref?.current?.classList.add('hover'), 0);
+  }
+}
+
+function mapItemToMazeElement(mazeDragElement: MazeDragElement): MazeElement {
+  return {
+    type: mazeDragElement.elementType,
+    location: mazeDragElement.location,
   };
-  moveElement(sourceElement, droppableElement);
-  setTimeout(() => ref?.current?.classList.add('hover'), 0);
 }
 
 function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
   return {
     isOver: monitor.isOver(),
+    draggedItem: monitor.getItem(),
   };
 }
 
@@ -65,4 +75,22 @@ export function buildElementDragOptions(
 function onDragEnd(ref: RefObject<HTMLDivElement>): void {
   ref?.current?.blur();
   ref?.current?.classList.remove('hover');
+}
+
+function validateElementMoving(
+  validators: MazeElementMovingValidator[],
+  sourceType: string,
+  targetType: string
+): boolean {
+  return validators
+    .map((validator) => validator(sourceType, targetType))
+    .some((value) => value);
+}
+
+export function bindElementValidatorBySourceType(
+  validators: MazeElementMovingValidator[],
+  targetType: string
+): (sourceType: string) => boolean {
+  return (sourceType) =>
+    validateElementMoving(validators, sourceType, targetType);
 }

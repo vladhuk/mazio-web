@@ -89,30 +89,12 @@ export function bindMoveOrAddMazeElement<T extends MazeElement>(
   setElementsState: (newState: T[][]) => void
 ): MoveMazeElement {
   return (source, target) => {
-    if (!validateMoving(source, target)) {
-      return;
-    }
-
     const newRows =
       source.location.x < 0
         ? addMazeElement(elementsState, source.type, target.location)
         : swapMazeElements(elementsState, source.location, target.location);
     setElementsState(newRows);
   };
-}
-
-function validateMoving<T extends MazeElement>(source: T, target: T): boolean {
-  if (source.type === WallType.OUTPUT && target.type !== WallType.EXTERNAL) {
-    return false;
-  }
-  if (source.type !== WallType.OUTPUT && target.type === WallType.EXTERNAL) {
-    return false;
-  }
-  if (target.type === WallType.OUTPUT) {
-    return false;
-  }
-
-  return true;
 }
 
 function addMazeElement<T extends MazeElement>(
@@ -142,6 +124,10 @@ export function bindRemoveMazeElement<T extends MazeElement>(
   setElementsState: (newState: T[][]) => void
 ): RemoveMazeElement {
   return (element) => {
+    if (element.location.x < 0 || element.location.y < 0) {
+      return;
+    }
+
     const newRows = cloneDeep(elementsState);
     const newElement = newRows[element.location.y][element.location.x];
     newElement.type = getPlaceholderForRemovedElement(element.type);

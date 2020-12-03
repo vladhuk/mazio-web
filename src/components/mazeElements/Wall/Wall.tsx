@@ -3,6 +3,7 @@ import './Wall.scss';
 import {
   getCssClassNameFromWallType,
   getCssClassNameFromWallPosition,
+  validateMazeWallMoving,
 } from './Wall.service';
 import IWall, { WallType } from '../../../types/models/Maze/Structure/Wall';
 import { ItemType } from '../../../constants';
@@ -33,6 +34,7 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
       dragItemType={ItemType.MAZE_WALL}
       dragItemNoneTypes={[WallType.NONE, WallType.EXTERNAL]}
       moveElement={moveWall}
+      elementMovingValidators={[validateMazeWallMoving]}
     />
   );
 };

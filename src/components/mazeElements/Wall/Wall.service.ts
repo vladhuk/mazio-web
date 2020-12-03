@@ -1,5 +1,6 @@
 import UnidentifiedWallTypeError from '../../../errors/UnidentifiedWallTypeError';
 import { WallType } from '../../../types/models/Maze/Structure/Wall';
+import MazeElementMovingValidator from '../../../types/util/validators/maze/MazeElementMovingValidator';
 import { WallPosition } from './Wall';
 
 export function getCssClassNameFromWallPosition(
@@ -26,3 +27,20 @@ export function getCssClassNameFromWallType(type: WallType): string {
       throw new UnidentifiedWallTypeError(type);
   }
 }
+
+export const validateMazeWallMoving: MazeElementMovingValidator = (
+  sourceType,
+  targetType
+) => {
+  if (sourceType === WallType.OUTPUT && targetType !== WallType.EXTERNAL) {
+    return false;
+  }
+  if (sourceType !== WallType.OUTPUT && targetType === WallType.EXTERNAL) {
+    return false;
+  }
+  if (targetType === WallType.OUTPUT) {
+    return false;
+  }
+
+  return true;
+};

@@ -8,6 +8,7 @@ import { buildElementDragOptions } from './MoveableMazeElement.service';
 import MazeElement from '../MazeElement';
 import DroppableMazeElement from './DroppableMazeElement';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
+import MazeElementMovingValidator from '../../../types/util/validators/maze/MazeElementMovingValidator';
 
 interface Props {
   element: IMazeElement;
@@ -15,6 +16,7 @@ interface Props {
   dragItemNoneTypes: string[];
   className?: string;
   moveElement?: MoveMazeElement;
+  elementMovingValidators?: MazeElementMovingValidator[];
 }
 
 const MoveableMazeElement: FunctionComponent<Props> = ({
@@ -23,6 +25,7 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
   dragItemNoneTypes,
   className,
   moveElement,
+  elementMovingValidators,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -49,6 +52,7 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
       element={element}
       dragItemType={dragItemType}
       moveElement={moveElement}
+      elementMovingValidators={elementMovingValidators}
     />
   ) : (
     <MazeElement ref={ref} className={className} />
