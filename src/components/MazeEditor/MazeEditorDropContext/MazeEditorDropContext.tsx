@@ -6,6 +6,8 @@ import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
 import RemoveMazeElement from '../../../types/util/dnd/maze/RemoveMazeElement';
 import { buildMazeEditorDropContextOptions } from './MazeEditorDropContext.service';
 
+import './MazeEditorDropContext.scss';
+
 interface Props {
   removeCell?: RemoveMazeElement;
   removeWall?: RemoveMazeElement;
@@ -34,7 +36,7 @@ const MazeEditorDropContext: FunctionComponent<Props> = ({
   );
 
   return (
-    <div ref={drop} className="vh-100">
+    <div ref={drop} className="maze-editor-drop-context">
       {children}
     </div>
   );
