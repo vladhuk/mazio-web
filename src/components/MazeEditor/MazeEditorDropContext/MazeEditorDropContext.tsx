@@ -14,7 +14,6 @@ interface Props {
 }
 
 const MazeEditorDropContext: FunctionComponent<Props> = ({
-  children,
   removeCell,
   removeWall,
 }) => {
@@ -35,11 +34,7 @@ const MazeEditorDropContext: FunctionComponent<Props> = ({
     buildMazeEditorDropContextOptions(getRemoveElement)
   );
 
-  return (
-    <div ref={drop} className="maze-editor-drop-context">
-      {children}
-    </div>
-  );
+  return <div ref={drop} className="maze-editor-drop-context" />;
 };
 
 export default MazeEditorDropContext;

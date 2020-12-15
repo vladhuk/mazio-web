@@ -87,29 +87,28 @@ const MazeEditor: FunctionComponent = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell}>
-        <MazeEditorContainer>
-          <MazeDropContextAndDragLayer>
-            <Maze
-              wallsRows={wallsRows}
-              cellsRows={cellsRows}
-              moveWall={moveWall}
-              moveCell={moveCell}
-            />
-          </MazeDropContextAndDragLayer>
-          <FormContainersWrapper md={4}>
-            <MazeResizer
-              minSize={mazeMinSize}
-              size={mazeSize}
-              setSize={setMazeSizeAndUpdateMaze}
-            />
-            <MazeElementsMenu
-              cellTypes={menuCellTypes}
-              wallTypes={menuWallTypes}
-            />
-          </FormContainersWrapper>
-        </MazeEditorContainer>
-      </MazeEditorDropContext>
+      <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell} />
+      <MazeEditorContainer>
+        <MazeDropContextAndDragLayer>
+          <Maze
+            wallsRows={wallsRows}
+            cellsRows={cellsRows}
+            moveWall={moveWall}
+            moveCell={moveCell}
+          />
+        </MazeDropContextAndDragLayer>
+        <FormContainersWrapper md={4}>
+          <MazeResizer
+            minSize={mazeMinSize}
+            size={mazeSize}
+            setSize={setMazeSizeAndUpdateMaze}
+          />
+          <MazeElementsMenu
+            cellTypes={menuCellTypes}
+            wallTypes={menuWallTypes}
+          />
+        </FormContainersWrapper>
+      </MazeEditorContainer>
     </DndProvider>
   );
 };
