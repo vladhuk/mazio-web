@@ -57,6 +57,12 @@ module.exports = {
 
     'react/jsx-filename-extension': OFF,
     'react/prop-types': OFF,
+    'react/jsx-props-no-spreading': [
+      WARN,
+      {
+        custom: 'ignore',
+      },
+    ],
 
     'jsx-a11y/no-noninteractive-tabindex': OFF,
     'jsx-a11y/no-static-element-interactions': OFF,
