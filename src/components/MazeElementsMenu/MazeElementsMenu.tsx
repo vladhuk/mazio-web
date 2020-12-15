@@ -4,9 +4,9 @@ import ElementsContainer from './ElementsContainer';
 import ElementWrapper from './ElementWrapper';
 import Wall, { WallPosition } from '../mazeElements/Wall';
 import Tooltip from '../Tooltip';
-import MazeElementsMenuContainer from './MazeElementsMenuContainer';
 import { CellType } from '../../types/models/Maze/Structure/Cell';
 import { WallType } from '../../types/models/Maze/Structure/Wall';
+import FormContainer from '../FormContainer';
 
 interface Props {
   cellTypes: CellType[];
@@ -17,7 +17,7 @@ const MazeElementsMenu: FunctionComponent<Props> = ({
   cellTypes,
   wallTypes,
 }) => (
-  <MazeElementsMenuContainer>
+  <FormContainer>
     <h4>Cells</h4>
     <ElementsContainer>
       {cellTypes.map((type) => (
@@ -42,7 +42,7 @@ const MazeElementsMenu: FunctionComponent<Props> = ({
         </ElementWrapper>
       ))}
     </ElementsContainer>
-  </MazeElementsMenuContainer>
+  </FormContainer>
 );
 
 export default MazeElementsMenu;
