@@ -1,3 +1,4 @@
+import keyboard, { getCode } from 'keyboard-key';
 import React, { forwardRef, useState } from 'react';
 import './MazeElement.scss';
 
@@ -29,7 +30,7 @@ const MazeElement = forwardRef<HTMLDivElement, Props>(
         onBlur={() => setFocus(false)}
         onClick={(event) => isFocus && blurElement(event.target)}
         onKeyDown={(event) =>
-          event.key === 'Escape' && blurElement(event.target)
+          getCode(event) === keyboard.Escape && blurElement(event.target)
         }
       />
     );
