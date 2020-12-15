@@ -1,4 +1,4 @@
-import { cloneDeep, concat, range } from 'lodash';
+import { cloneDeep, concat, flatten, maxBy, range } from 'lodash';
 import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
 import ElementLocation from '../../types/models/Maze/Structure/ElementLocation';
 import MazeElement, {
@@ -9,6 +9,16 @@ import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
 import RemoveMazeElement from '../../types/util/dnd/maze/RemoveMazeElement';
 
+/**
+ * Simplified maze elements data is a data stored in the database. It doesn't
+ * containt NONE type of all elements and EXTERNAL type of wall.
+ *
+ * Built maze elements is always 2-dimensional array.
+ */
+
+/**
+ * Builds full walls rows from simplified walls data
+ */
 export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
   const preset = buildWallsPreset(mazeSize);
 
@@ -57,6 +67,9 @@ function buildWallsPreset(mazeSize: Size): Wall[][] {
   ];
 }
 
+/**
+ * Builds full cells rows from simplified cells data
+ */
 export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
   const preset = buildCellsPreset(mazeSize);
 
@@ -78,6 +91,89 @@ function buildCellsPreset(mazeSize: Size): Cell[][] {
       type: CellType.NONE,
     }))
   );
+}
+
+function simplifyMazeElementsData<T extends MazeElement>(
+  mazeElementsRows: T[][]
+): T[] {
+  return flatten(mazeElementsRows).filter(
+    (element) => element.type !== MazeElementType.NONE
+  );
+}
+
+export function simplifyWallsData(wallsRows: Wall[][]): Wall[] {
+  return simplifyMazeElementsData(wallsRows).filter(
+    (wall) => wall.type !== WallType.EXTERNAL
+  );
+}
+
+export function simplifyCellsData(cellsRows: Cell[][]): Cell[] {
+  return simplifyMazeElementsData(cellsRows);
+}
+
+export function getMazeMinSize(walls: Wall[], cells: Cell[]): Size {
+  const borders = [...getWallsBorders(walls), ...getCellsBorders(cells)];
+
+  return {
+    width: maxBy(borders, (b) => b.width)?.width || 1,
+    height: maxBy(borders, (b) => b.height)?.height || 1,
+  };
+}
+
+function getWallsBorders(walls: Wall[]): Size[] {
+  return walls
+    .filter((wall) => !isWallOutputAndLocatedOnBottomOrRight(wall))
+    .map((wall) => wall.location)
+    .map(({ x, y }) => ({ x: Math.floor(x / 2), y: Math.floor(y / 2) }))
+    .map(mapLocationToSize);
+}
+
+function isWallOutputAndLocatedOnBottomOrRight(wall: Wall): boolean {
+  return (
+    wall.type === WallType.OUTPUT && !Object.values(wall.location).includes(0)
+  );
+}
+
+function getCellsBorders(cells: Cell[]): Size[] {
+  return cells.map((cell) => cell.location).map(mapLocationToSize);
+}
+
+function mapLocationToSize({ x, y }: ElementLocation): Size {
+  return { width: x + 1, height: y + 1 };
+}
+
+export function fixWallsOnResizing(
+  walls: Wall[],
+  currentSize: Size,
+  newSize: Size
+): Wall[] {
+  return fixWallsLocationsOnResizing(walls, currentSize, newSize);
+}
+
+/**
+ * Move outputs to borders
+ */
+function fixWallsLocationsOnResizing(
+  walls: Wall[],
+  currentSize: Size,
+  newSize: Size
+): Wall[] {
+  return walls.map((wall) => {
+    if (!isWallOutputAndLocatedOnBottomOrRight(wall)) {
+      return wall;
+    }
+
+    const { x, y } = wall.location;
+    const newLocation: ElementLocation =
+      x === currentSize.width
+        ? { x: newSize.width, y }
+        : { x, y: newSize.height * 2 };
+
+    return {
+      ...wall,
+      location: newLocation,
+    };
+  });
 }
 
 /**

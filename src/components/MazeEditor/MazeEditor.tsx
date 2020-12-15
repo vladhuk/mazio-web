@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Maze from '../Maze';
@@ -13,12 +13,21 @@ import {
   buildCells,
   bindMoveOrAddMazeElement,
   bindRemoveMazeElement,
+  getMazeMinSize,
+  simplifyWallsData,
+  simplifyCellsData,
+  fixWallsOnResizing,
 } from './MazeEditor.service';
 import Size from '../../types/models/Maze/Structure/Size';
 import { menuCellTypes, menuWallTypes } from './menuMazeElementsTypes';
+import MazeResizer from '../MazeResizer';
+import FormContainersWrapper from '../FormContainersWrapper';
 
 const demoWalls: Wall[] = [
-  { location: { x: 4, y: 0 }, type: WallType.OUTPUT },
+  { location: { x: 3, y: 14 }, type: WallType.OUTPUT },
+  { location: { x: 3, y: 0 }, type: WallType.OUTPUT },
+  { location: { x: 0, y: 7 }, type: WallType.OUTPUT },
+  { location: { x: 7, y: 7 }, type: WallType.OUTPUT },
   { location: { x: 3, y: 3 }, type: WallType.STONE },
   { location: { x: 3, y: 4 }, type: WallType.RUBBER },
   { location: { x: 3, y: 5 }, type: WallType.TRANSLUCENT },
@@ -38,11 +47,37 @@ const demoCells: Cell[] = [
   { location: { x: 3, y: 1 }, type: CellType.PIT_OUT },
 ];
 
-const mazeSize: Size = { height: 7, width: 7 };
+const defaultMazeSize: Size = { height: 7, width: 7 };
 
 const MazeEditor: FunctionComponent = () => {
-  const [wallsRows, setWallsRows] = useState(buildWalls(mazeSize, demoWalls));
-  const [cellsRows, setCellsRows] = useState(buildCells(mazeSize, demoCells));
+  const [mazeMinSize, setMazeMinSize] = useState<Size>(
+    getMazeMinSize(demoWalls, demoCells)
+  );
+  const [mazeSize, setMazeSize] = useState<Size>(defaultMazeSize);
+  const [wallsRows, setWallsRows] = useState(
+    buildWalls(defaultMazeSize, demoWalls)
+  );
+  const [cellsRows, setCellsRows] = useState(
+    buildCells(defaultMazeSize, demoCells)
+  );
+
+  useEffect(() => {
+    const minSize = getMazeMinSize(
+      simplifyWallsData(wallsRows),
+      simplifyCellsData(cellsRows)
+    );
+    setMazeMinSize(minSize);
+  }, [cellsRows, wallsRows]);
+
+  const setMazeSizeAndUpdateMaze = (newSize: Size) => {
+    const simplifiedWalls = simplifyWallsData(wallsRows);
+    const fixedWalls = fixWallsOnResizing(simplifiedWalls, mazeSize, newSize);
+
+    setWallsRows(buildWalls(newSize, fixedWalls));
+    setCellsRows(buildCells(newSize, simplifyCellsData(cellsRows)));
+
+    setMazeSize(newSize);
+  };
 
   const moveWall = bindMoveOrAddMazeElement(wallsRows, setWallsRows);
   const moveCell = bindMoveOrAddMazeElement(cellsRows, setCellsRows);
@@ -62,10 +97,17 @@ const MazeEditor: FunctionComponent = () => {
               moveCell={moveCell}
             />
           </MazeDropContextAndDragLayer>
-          <MazeElementsMenu
-            cellTypes={menuCellTypes}
-            wallTypes={menuWallTypes}
-          />
+          <FormContainersWrapper md={4}>
+            <MazeResizer
+              minSize={mazeMinSize}
+              size={mazeSize}
+              setSize={setMazeSizeAndUpdateMaze}
+            />
+            <MazeElementsMenu
+              cellTypes={menuCellTypes}
+              wallTypes={menuWallTypes}
+            />
+          </FormContainersWrapper>
         </MazeEditorContainer>
       </MazeEditorDropContext>
     </DndProvider>
