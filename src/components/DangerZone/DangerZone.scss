@@ -1,0 +1,8 @@
+.danger-zone {
+  display: flex;
+  transition: 0.3s;
+}
+
+.danger-zone-enabled {
+  background: rgba(255, 0, 0, 0.6);
+}
