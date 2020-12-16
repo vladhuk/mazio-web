@@ -1,11 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { useDrop } from 'react-dnd';
-import { ItemType } from '../../../constants';
-import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
-import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
-import MazeElementDragLayer from '../../mazeElements/MazeElementDragLayer';
-
-import './MazeDropContextAndDragLayer.scss';
+import { ItemType } from '../../constants';
+import MazeDragElement from '../../types/util/dnd/maze/MazeDragElement';
+import MazeDropCollectedProps from '../../types/util/dnd/maze/MazeDropCollectedProps';
+import MazeElementDragLayer from '../mazeElements/MazeElementDragLayer';
 
 const MazeDropContextAndDragLayer: FunctionComponent = ({ children }) => {
   const [{ isOver }, drop] = useDrop<
@@ -20,9 +18,7 @@ const MazeDropContextAndDragLayer: FunctionComponent = ({ children }) => {
   return (
     <>
       <MazeElementDragLayer isOutsideMaze={!isOver} />
-      <div ref={drop} className="maze-drop-context">
-        {children}
-      </div>
+      <div ref={drop}>{children}</div>
     </>
   );
 };

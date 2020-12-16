@@ -5,7 +5,7 @@ import Maze from '../Maze';
 import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
 import MazeDropContextAndDragLayer from './MazeDropContextAndDragLayer';
-import MazeEditorDropContext from './MazeEditorDropContext/MazeEditorDropContext';
+import MazeEditorDropContext from './MazeEditorDropContext';
 import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
 import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 import {
@@ -87,28 +87,29 @@ const MazeEditor: FunctionComponent = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell} />
-      <MazeEditorContainer>
-        <MazeDropContextAndDragLayer>
-          <Maze
-            wallsRows={wallsRows}
-            cellsRows={cellsRows}
-            moveWall={moveWall}
-            moveCell={moveCell}
-          />
-        </MazeDropContextAndDragLayer>
-        <FormContainersWrapper md={4}>
-          <MazeResizer
-            minSize={mazeMinSize}
-            size={mazeSize}
-            setSize={setMazeSizeAndUpdateMaze}
-          />
-          <MazeElementsMenu
-            cellTypes={menuCellTypes}
-            wallTypes={menuWallTypes}
-          />
-        </FormContainersWrapper>
-      </MazeEditorContainer>
+      <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell}>
+        <MazeEditorContainer>
+          <MazeDropContextAndDragLayer>
+            <Maze
+              wallsRows={wallsRows}
+              cellsRows={cellsRows}
+              moveWall={moveWall}
+              moveCell={moveCell}
+            />
+          </MazeDropContextAndDragLayer>
+          <FormContainersWrapper md={4}>
+            <MazeResizer
+              minSize={mazeMinSize}
+              size={mazeSize}
+              setSize={setMazeSizeAndUpdateMaze}
+            />
+            <MazeElementsMenu
+              cellTypes={menuCellTypes}
+              wallTypes={menuWallTypes}
+            />
+          </FormContainersWrapper>
+        </MazeEditorContainer>
+      </MazeEditorDropContext>
     </DndProvider>
   );
 };
