@@ -18,7 +18,7 @@ import {
   simplifyCellsData,
   fixWallsOnResizing,
 } from './MazeEditor.service';
-import Size from '../../types/models/Maze/Structure/Size';
+import Size, { PartialSize } from '../../types/models/Maze/Structure/Size';
 import { menuCellTypes, menuWallTypes } from './menuMazeElementsTypes';
 import MazeResizer from '../MazeResizer';
 import FormContainersWrapper from '../FormContainersWrapper';
@@ -60,6 +60,7 @@ const MazeEditor: FunctionComponent = () => {
   const [cellsRows, setCellsRows] = useState(
     buildCells(defaultMazeSize, demoCells)
   );
+  const [restrictedSize, setRestrictedSize] = useState<PartialSize>({});
 
   useEffect(() => {
     const minSize = getMazeMinSize(
@@ -80,6 +81,11 @@ const MazeEditor: FunctionComponent = () => {
     setMazeSize(newSize);
   };
 
+  const onRestrictedSize = (newRestrictedSize: PartialSize) => {
+    setRestrictedSize(newRestrictedSize);
+    setTimeout(() => setRestrictedSize({}), 300);
+  };
+
   const moveWall = bindMoveOrAddMazeElement(wallsRows, setWallsRows);
   const moveCell = bindMoveOrAddMazeElement(cellsRows, setCellsRows);
 
@@ -96,6 +102,7 @@ const MazeEditor: FunctionComponent = () => {
               cellsRows={cellsRows}
               moveWall={moveWall}
               moveCell={moveCell}
+              restrictedSize={restrictedSize}
             />
           </MazeDropContextAndDragLayer>
           <FormContainersWrapper md={4}>
@@ -103,6 +110,7 @@ const MazeEditor: FunctionComponent = () => {
               minSize={mazeMinSize}
               size={mazeSize}
               setSize={setMazeSizeAndUpdateMaze}
+              onRestrictedSize={onRestrictedSize}
             />
             <MazeElementsMenu
               cellTypes={menuCellTypes}
