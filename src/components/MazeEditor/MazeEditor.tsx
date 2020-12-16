@@ -51,7 +51,7 @@ const defaultMazeSize: Size = { height: 7, width: 7 };
 
 const MazeEditor: FunctionComponent = () => {
   const [mazeMinSize, setMazeMinSize] = useState<Size>(
-    getMazeMinSize(demoWalls, demoCells)
+    getMazeMinSize(demoWalls, demoCells, defaultMazeSize)
   );
   const [mazeSize, setMazeSize] = useState<Size>(defaultMazeSize);
   const [wallsRows, setWallsRows] = useState(
@@ -64,10 +64,11 @@ const MazeEditor: FunctionComponent = () => {
   useEffect(() => {
     const minSize = getMazeMinSize(
       simplifyWallsData(wallsRows),
-      simplifyCellsData(cellsRows)
+      simplifyCellsData(cellsRows),
+      mazeSize
     );
     setMazeMinSize(minSize);
-  }, [cellsRows, wallsRows]);
+  }, [cellsRows, mazeSize, wallsRows]);
 
   const setMazeSizeAndUpdateMaze = (newSize: Size) => {
     const simplifiedWalls = simplifyWallsData(wallsRows);

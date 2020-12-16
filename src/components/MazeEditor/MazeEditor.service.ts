@@ -111,21 +111,52 @@ export function simplifyCellsData(cellsRows: Cell[][]): Cell[] {
   return simplifyMazeElementsData(cellsRows);
 }
 
-export function getMazeMinSize(walls: Wall[], cells: Cell[]): Size {
-  const borders = [...getWallsBorders(walls), ...getCellsBorders(cells)];
+export function getMazeMinSize(
+  walls: Wall[],
+  cells: Cell[],
+  currentSize: Size
+): Size {
+  const wallsBorders: [Size[], Size[]] = getWallsBorders(walls, currentSize);
+  const cellsBorders: Size[] = getCellsBorders(cells);
+
+  const [rightBorders, bottomBorders] = wallsBorders.map((wallSideBorders) => [
+    ...cellsBorders,
+    ...wallSideBorders,
+  ]);
 
   return {
-    width: maxBy(borders, (b) => b.width)?.width || 1,
-    height: maxBy(borders, (b) => b.height)?.height || 1,
+    width: maxBy(rightBorders, (b) => b.width)?.width || 1,
+    height: maxBy(bottomBorders, (b) => b.height)?.height || 1,
   };
 }
 
-function getWallsBorders(walls: Wall[]): Size[] {
-  return walls
-    .filter((wall) => !isWallOutputAndLocatedOnBottomOrRight(wall))
-    .map((wall) => wall.location)
-    .map(({ x, y }) => ({ x: Math.floor(x / 2), y: Math.floor(y / 2) }))
-    .map(mapLocationToSize);
+/**
+ * @returns [rightBorder, bottomBorder]
+ */
+function getWallsBorders(
+  walls: Wall[],
+  currentMazeSize: Size
+): [Size[], Size[]] {
+  const { height, width } = currentMazeSize;
+
+  const rightOutputs = walls.filter((wall) => wall.location.x === width);
+  const bottomOutputs = walls.filter(
+    (wall) => Math.floor(wall.location.y / 2) === height
+  );
+
+  const wallsWithoutRightAndBottomOutputs = walls.filter(
+    (wall) => !isWallOutputAndLocatedOnBottomOrRight(wall)
+  );
+
+  return <[Size[], Size[]]>[
+    [...wallsWithoutRightAndBottomOutputs, ...bottomOutputs],
+    [...wallsWithoutRightAndBottomOutputs, ...rightOutputs],
+  ].map((borderWalls) =>
+    borderWalls
+      .map((wall) => wall.location)
+      .map(({ x, y }) => ({ x, y: Math.floor(y / 2) }))
+      .map(mapLocationToSize)
+  );
 }
 
 function isWallOutputAndLocatedOnBottomOrRight(wall: Wall): boolean {
