@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import { Col } from 'react-bootstrap';
 import Maze from '../Maze';
 import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
@@ -98,19 +99,21 @@ const MazeEditor: FunctionComponent = () => {
     <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell}>
         <MazeEditorContainer>
-          <MazeDropContextAndDragLayer>
-            <SquareContainer className="mx-3">
-              <OverflowContainer>
-                <Maze
-                  wallsRows={wallsRows}
-                  cellsRows={cellsRows}
-                  moveWall={moveWall}
-                  moveCell={moveCell}
-                  restrictedSize={restrictedSize}
-                />
-              </OverflowContainer>
-            </SquareContainer>
-          </MazeDropContextAndDragLayer>
+          <Col md={8}>
+            <MazeDropContextAndDragLayer>
+              <SquareContainer>
+                <OverflowContainer>
+                  <Maze
+                    wallsRows={wallsRows}
+                    cellsRows={cellsRows}
+                    moveWall={moveWall}
+                    moveCell={moveCell}
+                    restrictedSize={restrictedSize}
+                  />
+                </OverflowContainer>
+              </SquareContainer>
+            </MazeDropContextAndDragLayer>
+          </Col>
           <FormContainersWrapper md={4}>
             <MazeResizer
               minSize={mazeMinSize}
