@@ -18,7 +18,9 @@ const MazeDropContextAndDragLayer: FunctionComponent = ({ children }) => {
   return (
     <>
       <MazeElementDragLayer isOutsideMaze={!isOver} />
-      <div ref={drop}>{children}</div>
+      <div className="w-100 h-100" ref={drop}>
+        {children}
+      </div>
     </>
   );
 };

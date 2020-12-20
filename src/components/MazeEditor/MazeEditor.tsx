@@ -22,6 +22,8 @@ import Size, { PartialSize } from '../../types/models/Maze/Structure/Size';
 import { menuCellTypes, menuWallTypes } from './menuMazeElementsTypes';
 import MazeResizer from '../MazeResizer';
 import FormContainersWrapper from '../FormContainersWrapper';
+import OverflowContainer from '../OverflowContainer';
+import SquareContainer from '../SquareContainer';
 
 const demoWalls: Wall[] = [
   { location: { x: 3, y: 14 }, type: WallType.OUTPUT },
@@ -97,13 +99,17 @@ const MazeEditor: FunctionComponent = () => {
       <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell}>
         <MazeEditorContainer>
           <MazeDropContextAndDragLayer>
-            <Maze
-              wallsRows={wallsRows}
-              cellsRows={cellsRows}
-              moveWall={moveWall}
-              moveCell={moveCell}
-              restrictedSize={restrictedSize}
-            />
+            <SquareContainer className="mx-3">
+              <OverflowContainer>
+                <Maze
+                  wallsRows={wallsRows}
+                  cellsRows={cellsRows}
+                  moveWall={moveWall}
+                  moveCell={moveCell}
+                  restrictedSize={restrictedSize}
+                />
+              </OverflowContainer>
+            </SquareContainer>
           </MazeDropContextAndDragLayer>
           <FormContainersWrapper md={4}>
             <MazeResizer
