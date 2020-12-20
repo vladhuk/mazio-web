@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 import Maze from '../Maze';
 import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
@@ -93,7 +93,7 @@ const MazeEditor: FunctionComponent = () => {
   const removeCell = bindRemoveMazeElement(cellsRows, setCellsRows);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <MazeEditorDropContext removeWall={removeWall} removeCell={removeCell}>
         <MazeEditorContainer>
           <MazeDropContextAndDragLayer>

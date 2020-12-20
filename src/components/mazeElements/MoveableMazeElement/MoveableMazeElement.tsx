@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useEffect, useRef } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import '../MazeElement/MazeElement.scss';
 import { useDrag } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
 import IMazeElement from '../../../types/models/Maze/Structure/MazeElement';
 import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
 import { buildElementDragOptions } from './MoveableMazeElement.service';
@@ -29,7 +28,7 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [, drag, preview] = useDrag<MazeDragElement, unknown, unknown>(
+  const [, drag] = useDrag<MazeDragElement, unknown, unknown>(
     buildElementDragOptions(
       element,
       ref,
@@ -40,10 +39,6 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
   );
 
   drag(ref);
-
-  useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
-  }, [preview]);
 
   return moveElement ? (
     <DroppableMazeElement
