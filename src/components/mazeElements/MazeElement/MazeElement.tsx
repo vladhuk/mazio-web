@@ -9,12 +9,10 @@ interface Props {
 
 const MazeElement = forwardRef<HTMLDivElement, Props>(
   ({ danger, className }, ref) => {
-    const [isHover, setHover] = useState(false);
     const [isFocus, setFocus] = useState(false);
 
-    const hoverClassName = isHover ? 'hover' : '';
     const dangerClassName = danger ? 'danger' : '';
-    const elementClassName = `maze-element ${hoverClassName} ${dangerClassName} ${className}`;
+    const elementClassName = `maze-element ${dangerClassName} ${className}`;
 
     const blurElement = (eventTarget: EventTarget) =>
       (eventTarget as HTMLDivElement).blur();
@@ -24,8 +22,6 @@ const MazeElement = forwardRef<HTMLDivElement, Props>(
         ref={ref}
         tabIndex={0}
         className={elementClassName}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
         onFocus={() => setTimeout(() => setFocus(true), 200)}
         onBlur={() => setFocus(false)}
         onClick={(event) => isFocus && blurElement(event.target)}

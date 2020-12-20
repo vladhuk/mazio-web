@@ -38,15 +38,13 @@ const DroppableMazeElement = forwardRef<HTMLDivElement, Props>(
       MazeDragElement,
       unknown,
       MazeDropCollectedProps
-    >(
-      buildElementDropOptions(dragItemType, castedRef, element, getMoveElement)
-    );
+    >(buildElementDropOptions(dragItemType, element, getMoveElement));
 
     drop(castedRef);
 
     const dragHoverClassName =
       isOver && draggedItem && validateMoving(draggedItem.elementType)
-        ? 'hover drag-hover'
+        ? 'drag-hover'
         : '';
     const elementClassName = `${dragHoverClassName} ${className}`;
 

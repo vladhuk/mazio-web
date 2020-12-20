@@ -33,7 +33,8 @@ $focus-scale-factor: 1.4;
     border: 2px solid black;
   }
 
-  &.hover::before {
+  &:hover::before,
+  &.drag-hover::before {
     @include get-cell-size($hover-scale-factor);
   }
   
@@ -51,7 +52,7 @@ $focus-scale-factor: 1.4;
       cursor: default;
     }
     
-    &.hover:not(.drag-hover)::before,
+    &:hover:not(.drag-hover)::before,
     &:focus::before {
       @include get-cell-size(1);
       filter: none;

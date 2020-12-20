@@ -52,11 +52,13 @@ $wall-width: $shape-length * $length-width-scale-factor;
     margin-right: $margin;
   }
   
-  &-v.hover::before {
+  &-v:hover::before,
+  &-v.drag-hover::before {
     @include get-wall-size(v, $hover-scale-factor);
   }
   
-  &-h.hover::before {
+  &-h:hover::before,
+  &-h.drag-hover::before {
     @include get-wall-size(h, $hover-scale-factor);
   }
   
@@ -79,7 +81,7 @@ $wall-width: $shape-length * $length-width-scale-factor;
       border: none;
     }
     
-    &.hover.drag-hover::before {
+    &.drag-hover::before {
       background: black;
       opacity: 0.4;
       filter: none;
@@ -92,12 +94,12 @@ $wall-width: $shape-length * $length-width-scale-factor;
       cursor: default;
     }
 
-    &.wall-v.hover:not(.drag-hover)::before,
+    &.wall-v:hover:not(.drag-hover)::before,
     &.wall-v:focus::before {
       @include get-wall-size(v, 1);
       filter: none;
     }
-    &.wall-h.hover:not(.drag-hover)::before,
+    &.wall-h:hover:not(.drag-hover)::before,
     &.wall-h:focus::before {
       @include get-wall-size(h, 1);
       filter: none;

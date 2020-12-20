@@ -12,20 +12,18 @@ import MazeElementMovingValidator from '../../../types/util/validators/maze/Maze
 
 export function buildElementDropOptions(
   droppableItemType: string,
-  ref: RefObject<HTMLDivElement>,
   droppableElement: MazeElement,
   getMoveElement: (sourceType: string) => MoveMazeElement | undefined
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
     accept: droppableItemType,
     drop: (draggedItem) =>
-      onDrop(ref, draggedItem, droppableElement, getMoveElement),
+      onDrop(draggedItem, droppableElement, getMoveElement),
     collect: collectDragProps,
   };
 }
 
 function onDrop(
-  ref: RefObject<HTMLDivElement>,
   draggedItem: MazeDragElement,
   droppableElement: MazeElement,
   getMoveElement: (sourceType: string) => MoveMazeElement | undefined
@@ -33,10 +31,7 @@ function onDrop(
   const sourceElement = mapItemToMazeElement(draggedItem);
   const moveElement = getMoveElement(sourceElement.type);
 
-  if (moveElement) {
-    moveElement(sourceElement, droppableElement);
-    setTimeout(() => ref?.current?.classList.add('hover'), 0);
-  }
+  moveElement?.(sourceElement, droppableElement);
 }
 
 function mapItemToMazeElement(mazeDragElement: MazeDragElement): MazeElement {
@@ -68,13 +63,8 @@ export function buildElementDragOptions(
       className,
     },
     canDrag: !dragItemNoneTypes.includes(type),
-    end: () => onDragEnd(ref),
+    end: () => ref?.current?.blur(),
   };
-}
-
-function onDragEnd(ref: RefObject<HTMLDivElement>): void {
-  ref?.current?.blur();
-  ref?.current?.classList.remove('hover');
 }
 
 function validateElementMoving(
