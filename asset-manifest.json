@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/mazio-web/static/css/main.591f99bc.chunk.css",
+    "main.js": "/mazio-web/static/js/main.6119ad10.chunk.js",
+    "main.js.map": "/mazio-web/static/js/main.6119ad10.chunk.js.map",
+    "runtime-main.js": "/mazio-web/static/js/runtime-main.77b58afd.js",
+    "runtime-main.js.map": "/mazio-web/static/js/runtime-main.77b58afd.js.map",
+    "static/css/2.11829350.chunk.css": "/mazio-web/static/css/2.11829350.chunk.css",
+    "static/js/2.22ec8256.chunk.js": "/mazio-web/static/js/2.22ec8256.chunk.js",
+    "static/js/2.22ec8256.chunk.js.map": "/mazio-web/static/js/2.22ec8256.chunk.js.map",
+    "index.html": "/mazio-web/index.html",
+    "precache-manifest.2ddb211b804001a24c3fa8704661f419.js": "/mazio-web/precache-manifest.2ddb211b804001a24c3fa8704661f419.js",
+    "service-worker.js": "/mazio-web/service-worker.js",
+    "static/css/2.11829350.chunk.css.map": "/mazio-web/static/css/2.11829350.chunk.css.map",
+    "static/css/main.591f99bc.chunk.css.map": "/mazio-web/static/css/main.591f99bc.chunk.css.map",
+    "static/js/2.22ec8256.chunk.js.LICENSE.txt": "/mazio-web/static/js/2.22ec8256.chunk.js.LICENSE.txt",
+    "static/media/Cell.scss": "/mazio-web/static/media/trap.5ecd40b0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.77b58afd.js",
+    "static/css/2.11829350.chunk.css",
+    "static/js/2.22ec8256.chunk.js",
+    "static/css/main.591f99bc.chunk.css",
+    "static/js/main.6119ad10.chunk.js"
+  ]
+}
