@@ -148,7 +148,7 @@ function getWallsBorders(
     (wall) => !isWallOutputAndLocatedOnBottomOrRight(wall)
   );
 
-  return <[Size[], Size[]]>[
+  return [
     [...wallsWithoutRightAndBottomOutputs, ...bottomOutputs],
     [...wallsWithoutRightAndBottomOutputs, ...rightOutputs],
   ].map((borderWalls) =>
@@ -156,7 +156,7 @@ function getWallsBorders(
       .map((wall) => wall.location)
       .map(({ x, y }) => ({ x, y: Math.floor(y / 2) }))
       .map(mapLocationToSize)
-  );
+  ) as [Size[], Size[]];
 }
 
 function isWallOutputAndLocatedOnBottomOrRight(wall: Wall): boolean {
