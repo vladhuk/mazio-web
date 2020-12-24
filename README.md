@@ -4,6 +4,8 @@ This is a front-end part of project "Mazio".
 
 See [demo](https://vladhuk.github.io/mazio-web) on GitHub Pages.
 
+See also: [mazio-api](https://github.com/vladhuk/mazio-api) (Node.js application).
+
 ## Available Scripts
 
 In the project directory, you can run:
