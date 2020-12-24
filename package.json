@@ -1,6 +1,7 @@
 {
   "name": "mazio-web",
   "version": "0.1.0",
+  "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
