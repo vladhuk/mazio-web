@@ -2,6 +2,8 @@
 
 This is a front-end part of project "Mazio".
 
+See [demo](https://vladhuk.github.io/mazio-web) on GitHub Pages.
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -28,3 +30,6 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Starts linter
 
+### `yarn deploy`
+
+Deploys app to GitHub Pages
