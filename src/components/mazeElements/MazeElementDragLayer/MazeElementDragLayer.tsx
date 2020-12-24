@@ -1,25 +1,29 @@
 import React, { FunctionComponent } from 'react';
 import { useDragLayer } from 'react-dnd';
-import DragLayerCollectedProps from '../../../types/util/dnd/DragLayerCollectedProps';
-import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeDragLayerCollectedProps from '../../../types/util/dnd/maze/DragLayerCollectedProps';
 import MazeElement from '../MazeElement';
 import './MazeElementDragLayer.scss';
-import { getItemStyles } from './MazeElementDragLayer.service';
+import {
+  getItemStyles,
+  isDraggedFromMaze,
+  validateOffsetDiff,
+} from './MazeElementDragLayer.service';
 
 interface Props {
   isOutsideMaze?: boolean;
 }
 
 const MazeElementDragLayer: FunctionComponent<Props> = ({ isOutsideMaze }) => {
-  const { isDragging, item, currentOffset } = useDragLayer<
-    DragLayerCollectedProps<MazeDragElement>
+  const { isDragging, item, currentOffset, offsetDiff } = useDragLayer<
+    MazeDragLayerCollectedProps
   >((monitor) => ({
     isDragging: monitor.isDragging(),
     item: monitor.getItem(),
     currentOffset: monitor.getSourceClientOffset(),
+    offsetDiff: monitor.getDifferenceFromInitialOffset(),
   }));
 
-  if (!isDragging) {
+  if (!isDragging || !offsetDiff || !currentOffset) {
     return null;
   }
 
@@ -29,7 +33,11 @@ const MazeElementDragLayer: FunctionComponent<Props> = ({ isOutsideMaze }) => {
       style={getItemStyles(currentOffset)}
     >
       <MazeElement
-        danger={isOutsideMaze && item.location.x >= 0}
+        danger={
+          isOutsideMaze &&
+          isDraggedFromMaze(item) &&
+          validateOffsetDiff(offsetDiff)
+        }
         className={item.className}
       />
     </div>
