@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import Wall, { WallPosition } from '../mazeElements/Wall';
 import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
-import IWall from '../../types/models/Maze/Structure/Wall';
+import MazeElement from '../../types/models/Maze/Structure/MazeElement';
 import FlexBox from '../FlexBox';
 import { PartialSize } from '../../types/models/Maze/Structure/Size';
 import WithDangerZoneIfNeeded from './WithDangerZoneIfNeeded';
 
 interface Props {
-  wallsRow: IWall[];
+  wallsRow: MazeElement[];
   moveWall?: MoveMazeElement;
   restrictedSize?: PartialSize;
 }

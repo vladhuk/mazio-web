@@ -6,15 +6,19 @@ import {
   bindElementValidatorBySourceType,
 } from './MoveableMazeElement.service';
 import MazeElement from '../MazeElement';
-import IMazeElement from '../../../types/models/Maze/Structure/MazeElement';
+import IMazeElement, {
+  IMazeElementType,
+} from '../../../types/models/Maze/Structure/MazeElement';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
-import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeDragElement, {
+  MazeDragItemType,
+} from '../../../types/util/dnd/maze/MazeDragElement';
 import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
 import MazeElementMovingValidator from '../../../types/util/validators/maze/MazeElementMovingValidator';
 
 interface Props {
   element: IMazeElement;
-  dragItemType: string;
+  dragItemType: MazeDragItemType;
   className?: string;
   moveElement: MoveMazeElement;
   elementMovingValidators?: MazeElementMovingValidator[];
@@ -31,7 +35,7 @@ const DroppableMazeElement = forwardRef<HTMLDivElement, Props>(
       ? bindElementValidatorBySourceType(elementMovingValidators, element.type)
       : () => true;
 
-    const getMoveElement = (sourceType: string) =>
+    const getMoveElement = (sourceType: IMazeElementType) =>
       validateMoving(sourceType) ? moveElement : undefined;
 
     const [{ draggedItem, isOver }, drop] = useDrop<

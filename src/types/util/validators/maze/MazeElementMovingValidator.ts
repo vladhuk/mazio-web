@@ -1,6 +1,8 @@
+import { IMazeElementType } from '../../../models/Maze/Structure/MazeElement';
+
 type MazeElementMovingValidator = (
-  sourceType: string,
-  targetType: string
+  sourceType: IMazeElementType,
+  targetType: IMazeElementType
 ) => boolean;
 
 export default MazeElementMovingValidator;

@@ -5,10 +5,13 @@ import {
   getCssClassNameFromWallPosition,
   validateMazeWallMoving,
 } from './Wall.service';
-import IWall, { WallType } from '../../../types/models/Maze/Structure/Wall';
-import { ItemType } from '../../../constants';
+import MazeElement, {
+  MazeElementBaseType,
+  WallType,
+} from '../../../types/models/Maze/Structure/MazeElement';
 import MoveableMazeElement from '../MoveableMazeElement';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
+import { MazeDragItemType } from '../../../types/util/dnd/maze/MazeDragElement';
 
 export enum WallPosition {
   HORIZONTAL,
@@ -17,7 +20,7 @@ export enum WallPosition {
 
 interface Props {
   position: WallPosition;
-  wall: IWall;
+  wall: MazeElement;
   moveWall?: MoveMazeElement;
 }
 
@@ -31,8 +34,8 @@ const Wall: FunctionComponent<Props> = ({ position, wall, moveWall }) => {
     <MoveableMazeElement
       className={className}
       element={wall}
-      dragItemType={ItemType.MAZE_WALL}
-      dragItemNoneTypes={[WallType.NONE, WallType.EXTERNAL]}
+      dragItemType={MazeDragItemType.WALL}
+      dragElementNoneTypes={[MazeElementBaseType.NONE, WallType.EXTERNAL]}
       moveElement={moveWall}
       elementMovingValidators={[validateMazeWallMoving]}
     />

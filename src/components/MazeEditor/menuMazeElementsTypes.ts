@@ -1,5 +1,7 @@
-import { CellType } from '../../types/models/Maze/Structure/Cell';
-import { WallType } from '../../types/models/Maze/Structure/Wall';
+import {
+  CellType,
+  WallType,
+} from '../../types/models/Maze/Structure/MazeElement';
 
 export const menuCellTypes = [
   CellType.SPAWN,

@@ -3,14 +3,13 @@ import { flatten, range } from 'lodash';
 import MazeWallsRow from './MazeWallsRow';
 import MazeWallsAndCellsRow from './MazeWallsAndCellsRow';
 import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
-import Cell from '../../types/models/Maze/Structure/Cell';
-import Wall from '../../types/models/Maze/Structure/Wall';
 import { PartialSize } from '../../types/models/Maze/Structure/Size';
 import WithDangerZoneIfNeeded from './WithDangerZoneIfNeeded';
+import MazeElement from '../../types/models/Maze/Structure/MazeElement';
 
 interface Props {
-  cellsRows: Cell[][];
-  wallsRows: Wall[][];
+  cellsRows: MazeElement[][];
+  wallsRows: MazeElement[][];
   moveCell?: MoveMazeElement;
   moveWall?: MoveMazeElement;
   restrictedSize?: PartialSize;
@@ -23,7 +22,7 @@ const Maze: FunctionComponent<Props> = ({
   moveWall,
   restrictedSize,
 }) => {
-  const buildWallsRow = (wallsRow: Wall[]) => (
+  const buildWallsRow = (wallsRow: MazeElement[]) => (
     <MazeWallsRow
       wallsRow={wallsRow}
       moveWall={moveWall}

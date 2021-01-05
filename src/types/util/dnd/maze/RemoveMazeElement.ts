@@ -1,5 +1,5 @@
 import MazeElement from '../../../models/Maze/Structure/MazeElement';
 
-type RemoveMazeElement = <T extends MazeElement>(element: T) => void;
+type RemoveMazeElement = (element: MazeElement) => void;
 
 export default RemoveMazeElement;

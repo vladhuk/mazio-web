@@ -1,5 +1,5 @@
 import MazeElement from '../../../models/Maze/Structure/MazeElement';
 
-type MoveMazeElement = <T extends MazeElement>(source: T, target: T) => void;
+type MoveMazeElement = (source: MazeElement, target: MazeElement) => void;
 
 export default MoveMazeElement;

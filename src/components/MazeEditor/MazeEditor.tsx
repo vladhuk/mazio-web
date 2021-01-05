@@ -7,8 +7,10 @@ import MazeElementsMenu from '../MazeElementsMenu';
 import MazeEditorContainer from './MazeEditorContainer';
 import MazeDropContextAndDragLayer from './MazeDropContextAndDragLayer';
 import MazeEditorDropContext from './MazeEditorDropContext';
-import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
-import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
+import MazeElement, {
+  CellType,
+  WallType,
+} from '../../types/models/Maze/Structure/MazeElement';
 import {
   buildWalls,
   buildCells,
@@ -26,7 +28,7 @@ import FormContainersWrapper from '../FormContainersWrapper';
 import OverflowContainer from '../OverflowContainer';
 import SquareContainer from '../SquareContainer';
 
-const demoWalls: Wall[] = [
+const demoWalls: MazeElement[] = [
   { location: { x: 3, y: 14 }, type: WallType.OUTPUT },
   { location: { x: 3, y: 0 }, type: WallType.OUTPUT },
   { location: { x: 0, y: 7 }, type: WallType.OUTPUT },
@@ -36,7 +38,7 @@ const demoWalls: Wall[] = [
   { location: { x: 3, y: 5 }, type: WallType.TRANSLUCENT },
 ];
 
-const demoCells: Cell[] = [
+const demoCells: MazeElement[] = [
   { location: { x: 0, y: 0 }, type: CellType.SPAWN },
   { location: { x: 1, y: 0 }, type: CellType.TREASURE },
   { location: { x: 2, y: 0 }, type: CellType.FAKE_TREASURE },

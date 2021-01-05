@@ -4,9 +4,11 @@ import ElementsContainer from './ElementsContainer';
 import ElementWrapper from './ElementWrapper';
 import Wall, { WallPosition } from '../mazeElements/Wall';
 import Tooltip from '../Tooltip';
-import { CellType } from '../../types/models/Maze/Structure/Cell';
-import { WallType } from '../../types/models/Maze/Structure/Wall';
 import FormContainer from '../FormContainer';
+import {
+  CellType,
+  WallType,
+} from '../../types/models/Maze/Structure/MazeElement';
 
 interface Props {
   cellTypes: CellType[];

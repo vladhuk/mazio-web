@@ -4,16 +4,24 @@ import {
   DropTargetHookSpec,
   DragSourceHookSpec,
 } from 'react-dnd';
-import MazeElement from '../../../types/models/Maze/Structure/MazeElement';
-import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeElement, {
+  IMazeElementType,
+} from '../../../types/models/Maze/Structure/MazeElement';
+import MazeDragElement, {
+  MazeDragItemType,
+} from '../../../types/util/dnd/maze/MazeDragElement';
 import MazeDropCollectedProps from '../../../types/util/dnd/maze/MazeDropCollectedProps';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
 import MazeElementMovingValidator from '../../../types/util/validators/maze/MazeElementMovingValidator';
 
+type GetMoveElement = (
+  sourceType: IMazeElementType
+) => MoveMazeElement | undefined;
+
 export function buildElementDropOptions(
-  droppableItemType: string,
+  droppableItemType: MazeDragItemType,
   droppableElement: MazeElement,
-  getMoveElement: (sourceType: string) => MoveMazeElement | undefined
+  getMoveElement: GetMoveElement
 ): DropTargetHookSpec<MazeDragElement, unknown, MazeDropCollectedProps> {
   return {
     accept: droppableItemType,
@@ -26,7 +34,7 @@ export function buildElementDropOptions(
 function onDrop(
   draggedItem: MazeDragElement,
   droppableElement: MazeElement,
-  getMoveElement: (sourceType: string) => MoveMazeElement | undefined
+  getMoveElement: GetMoveElement
 ): void {
   const sourceElement = mapItemToMazeElement(draggedItem);
   const moveElement = getMoveElement(sourceElement.type);
@@ -51,8 +59,8 @@ function collectDragProps(monitor: DropTargetMonitor): MazeDropCollectedProps {
 export function buildElementDragOptions(
   { type, location }: MazeElement,
   ref: RefObject<HTMLDivElement>,
-  dragItemType: string,
-  dragItemNoneTypes: string[],
+  dragItemType: MazeDragItemType,
+  dragElementNoneTypes: IMazeElementType[],
   className: string
 ): DragSourceHookSpec<MazeDragElement, unknown, unknown> {
   return {
@@ -62,15 +70,15 @@ export function buildElementDragOptions(
       location,
       className,
     },
-    canDrag: !dragItemNoneTypes.includes(type),
+    canDrag: !dragElementNoneTypes.includes(type),
     end: () => ref?.current?.blur(),
   };
 }
 
 function validateElementMoving(
   validators: MazeElementMovingValidator[],
-  sourceType: string,
-  targetType: string
+  sourceType: IMazeElementType,
+  targetType: IMazeElementType
 ): boolean {
   return validators
     .map((validator) => validator(sourceType, targetType))
@@ -79,8 +87,8 @@ function validateElementMoving(
 
 export function bindElementValidatorBySourceType(
   validators: MazeElementMovingValidator[],
-  targetType: string
-): (sourceType: string) => boolean {
+  targetType: IMazeElementType
+): (sourceType: IMazeElementType) => boolean {
   return (sourceType) =>
     validateElementMoving(validators, sourceType, targetType);
 }

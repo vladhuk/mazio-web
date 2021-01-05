@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { useDrop } from 'react-dnd';
-import { ItemType } from '../../../constants';
 import UnidentifiedItemTypeError from '../../../errors/UnidentifiedItemTypeError';
-import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeDragElement, {
+  MazeDragItemType,
+} from '../../../types/util/dnd/maze/MazeDragElement';
 import RemoveMazeElement from '../../../types/util/dnd/maze/RemoveMazeElement';
 import { buildMazeEditorDropContextOptions } from './MazeEditorDropContext.service';
 
@@ -19,12 +20,12 @@ const MazeEditorDropContext: FunctionComponent<Props> = ({
   children,
 }) => {
   const getRemoveElement = (
-    itemType: string
+    itemType: MazeDragItemType
   ): RemoveMazeElement | undefined => {
     switch (itemType) {
-      case ItemType.MAZE_CELL:
+      case MazeDragItemType.CELL:
         return removeCell;
-      case ItemType.MAZE_WALL:
+      case MazeDragItemType.WALL:
         return removeWall;
       default:
         throw new UnidentifiedItemTypeError(itemType);

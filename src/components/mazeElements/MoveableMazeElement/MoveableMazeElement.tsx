@@ -1,8 +1,12 @@
 import React, { FunctionComponent, useRef } from 'react';
 import '../MazeElement/MazeElement.scss';
 import { useDrag } from 'react-dnd';
-import IMazeElement from '../../../types/models/Maze/Structure/MazeElement';
-import MazeDragElement from '../../../types/util/dnd/maze/MazeDragElement';
+import IMazeElement, {
+  IMazeElementType,
+} from '../../../types/models/Maze/Structure/MazeElement';
+import MazeDragElement, {
+  MazeDragItemType,
+} from '../../../types/util/dnd/maze/MazeDragElement';
 import { buildElementDragOptions } from './MoveableMazeElement.service';
 import MazeElement from '../MazeElement';
 import DroppableMazeElement from './DroppableMazeElement';
@@ -11,8 +15,8 @@ import MazeElementMovingValidator from '../../../types/util/validators/maze/Maze
 
 interface Props {
   element: IMazeElement;
-  dragItemType: string;
-  dragItemNoneTypes: string[];
+  dragItemType: MazeDragItemType;
+  dragElementNoneTypes: IMazeElementType[];
   className?: string;
   moveElement?: MoveMazeElement;
   elementMovingValidators?: MazeElementMovingValidator[];
@@ -21,7 +25,7 @@ interface Props {
 const MoveableMazeElement: FunctionComponent<Props> = ({
   element,
   dragItemType,
-  dragItemNoneTypes,
+  dragElementNoneTypes,
   className,
   moveElement,
   elementMovingValidators,
@@ -33,7 +37,7 @@ const MoveableMazeElement: FunctionComponent<Props> = ({
       element,
       ref,
       dragItemType,
-      dragItemNoneTypes,
+      dragElementNoneTypes,
       className || ''
     )
   );

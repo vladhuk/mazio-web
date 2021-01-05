@@ -1,11 +1,11 @@
 import { cloneDeep, concat, flatten, maxBy, range } from 'lodash';
-import Cell, { CellType } from '../../types/models/Maze/Structure/Cell';
 import ElementLocation from '../../types/models/Maze/Structure/ElementLocation';
 import MazeElement, {
-  MazeElementType,
+  MazeElementBaseType,
+  IMazeElementType,
+  WallType,
 } from '../../types/models/Maze/Structure/MazeElement';
 import Size from '../../types/models/Maze/Structure/Size';
-import Wall, { WallType } from '../../types/models/Maze/Structure/Wall';
 import MoveMazeElement from '../../types/util/dnd/maze/MoveMazeElement';
 import RemoveMazeElement from '../../types/util/dnd/maze/RemoveMazeElement';
 
@@ -19,7 +19,10 @@ import RemoveMazeElement from '../../types/util/dnd/maze/RemoveMazeElement';
 /**
  * Builds full walls rows from simplified walls data
  */
-export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
+export function buildWalls(
+  mazeSize: Size,
+  walls: MazeElement[]
+): MazeElement[][] {
   const preset = buildWallsPreset(mazeSize);
 
   walls.forEach((wall) => {
@@ -33,18 +36,18 @@ export function buildWalls(mazeSize: Size, walls: Wall[]): Wall[][] {
 /**
  * Builds walls preset with only outside walls
  */
-function buildWallsPreset(mazeSize: Size): Wall[][] {
+function buildWallsPreset(mazeSize: Size): MazeElement[][] {
   const wallsRowsQuantity = mazeSize.height * 2 + 1;
 
-  const walls: Wall[][] = range(1, wallsRowsQuantity - 1).map((y) => {
+  const walls: MazeElement[][] = range(1, wallsRowsQuantity - 1).map((y) => {
     const offset = y % 2 === 0 ? 0 : 1;
 
     const row = range(mazeSize.width - offset).map((x) => ({
       location: { x: x + offset, y },
-      type: WallType.NONE,
+      type: MazeElementBaseType.NONE,
     }));
 
-    const getSideWall = (x: number): Wall => ({
+    const getSideWall = (x: number): MazeElement => ({
       location: { x, y },
       type: WallType.EXTERNAL,
     });
@@ -70,7 +73,10 @@ function buildWallsPreset(mazeSize: Size): Wall[][] {
 /**
  * Builds full cells rows from simplified cells data
  */
-export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
+export function buildCells(
+  mazeSize: Size,
+  cells: MazeElement[]
+): MazeElement[][] {
   const preset = buildCellsPreset(mazeSize);
 
   cells.forEach((cell) => {
@@ -84,36 +90,36 @@ export function buildCells(mazeSize: Size, cells: Cell[]): Cell[][] {
 /**
  * Builds preset with emty cells
  */
-function buildCellsPreset(mazeSize: Size): Cell[][] {
+function buildCellsPreset(mazeSize: Size): MazeElement[][] {
   return range(mazeSize.height).map((y) =>
     range(mazeSize.width).map((x) => ({
       location: { x, y },
-      type: CellType.NONE,
+      type: MazeElementBaseType.NONE,
     }))
   );
 }
 
-function simplifyMazeElementsData<T extends MazeElement>(
-  mazeElementsRows: T[][]
-): T[] {
+function simplifyMazeElementsData(
+  mazeElementsRows: MazeElement[][]
+): MazeElement[] {
   return flatten(mazeElementsRows).filter(
-    (element) => element.type !== MazeElementType.NONE
+    (element) => element.type !== MazeElementBaseType.NONE
   );
 }
 
-export function simplifyWallsData(wallsRows: Wall[][]): Wall[] {
+export function simplifyWallsData(wallsRows: MazeElement[][]): MazeElement[] {
   return simplifyMazeElementsData(wallsRows).filter(
     (wall) => wall.type !== WallType.EXTERNAL
   );
 }
 
-export function simplifyCellsData(cellsRows: Cell[][]): Cell[] {
+export function simplifyCellsData(cellsRows: MazeElement[][]): MazeElement[] {
   return simplifyMazeElementsData(cellsRows);
 }
 
 export function getMazeMinSize(
-  walls: Wall[],
-  cells: Cell[],
+  walls: MazeElement[],
+  cells: MazeElement[],
   currentSize: Size
 ): Size {
   const wallsBorders: [Size[], Size[]] = getWallsBorders(walls, currentSize);
@@ -134,7 +140,7 @@ export function getMazeMinSize(
  * @returns [rightBorder, bottomBorder]
  */
 function getWallsBorders(
-  walls: Wall[],
+  walls: MazeElement[],
   currentMazeSize: Size
 ): [Size[], Size[]] {
   const { height, width } = currentMazeSize;
@@ -159,13 +165,13 @@ function getWallsBorders(
   ) as [Size[], Size[]];
 }
 
-function isWallOutputAndLocatedOnBottomOrRight(wall: Wall): boolean {
+function isWallOutputAndLocatedOnBottomOrRight(wall: MazeElement): boolean {
   return (
     wall.type === WallType.OUTPUT && !Object.values(wall.location).includes(0)
   );
 }
 
-function getCellsBorders(cells: Cell[]): Size[] {
+function getCellsBorders(cells: MazeElement[]): Size[] {
   return cells.map((cell) => cell.location).map(mapLocationToSize);
 }
 
@@ -174,10 +180,10 @@ function mapLocationToSize({ x, y }: ElementLocation): Size {
 }
 
 export function fixWallsOnResizing(
-  walls: Wall[],
+  walls: MazeElement[],
   currentSize: Size,
   newSize: Size
-): Wall[] {
+): MazeElement[] {
   return fixWallsLocationsOnResizing(walls, currentSize, newSize);
 }
 
@@ -185,10 +191,10 @@ export function fixWallsOnResizing(
  * Move outputs to borders
  */
 function fixWallsLocationsOnResizing(
-  walls: Wall[],
+  walls: MazeElement[],
   currentSize: Size,
   newSize: Size
-): Wall[] {
+): MazeElement[] {
   return walls.map((wall) => {
     if (!isWallOutputAndLocatedOnBottomOrRight(wall)) {
       return wall;
@@ -211,9 +217,9 @@ function fixWallsLocationsOnResizing(
  * Swap elements if both of them inside maze. Copy element to maze if source
  * element outside maze.
  */
-export function bindMoveOrAddMazeElement<T extends MazeElement>(
-  elementsState: T[][],
-  setElementsState: (newState: T[][]) => void
+export function bindMoveOrAddMazeElement(
+  elementsState: MazeElement[][],
+  setElementsState: (newState: MazeElement[][]) => void
 ): MoveMazeElement {
   return (source, target) => {
     const newRows =
@@ -224,31 +230,32 @@ export function bindMoveOrAddMazeElement<T extends MazeElement>(
   };
 }
 
-function addMazeElement<T extends MazeElement>(
-  elements: T[][],
-  sourceElementType: string,
+function addMazeElement(
+  elements: MazeElement[][],
+  sourceElementType: IMazeElementType,
   targetElementLocation: ElementLocation
-): T[][] {
+): MazeElement[][] {
   const newRows = cloneDeep(elements);
   const { x, y } = targetElementLocation;
   newRows[y][x].type = sourceElementType;
+  // newRows[y][x].id = uniqueId();
   return newRows;
 }
 
-function swapMazeElements<T extends MazeElement>(
-  elements: T[][],
+function swapMazeElements(
+  elements: MazeElement[][],
   loc1: ElementLocation,
   loc2: ElementLocation
-): T[][] {
+): MazeElement[][] {
   const newRows = cloneDeep(elements);
-  newRows[loc1.y][loc1.x].type = elements[loc2.y][loc2.x].type;
-  newRows[loc2.y][loc2.x].type = elements[loc1.y][loc1.x].type;
+  newRows[loc1.y][loc1.x] = { ...elements[loc2.y][loc2.x], location: loc1 };
+  newRows[loc2.y][loc2.x] = { ...elements[loc1.y][loc1.x], location: loc2 };
   return newRows;
 }
 
-export function bindRemoveMazeElement<T extends MazeElement>(
-  elementsState: T[][],
-  setElementsState: (newState: T[][]) => void
+export function bindRemoveMazeElement(
+  elementsState: MazeElement[][],
+  setElementsState: (newState: MazeElement[][]) => void
 ): RemoveMazeElement {
   return (element) => {
     if (element.location.x < 0 || element.location.y < 0) {
@@ -262,10 +269,12 @@ export function bindRemoveMazeElement<T extends MazeElement>(
   };
 }
 
-function getPlaceholderForRemovedElement(removedElementType: string): string {
+function getPlaceholderForRemovedElement(
+  removedElementType: IMazeElementType
+): IMazeElementType {
   if (removedElementType === WallType.OUTPUT) {
     return WallType.EXTERNAL;
   }
 
-  return MazeElementType.NONE;
+  return MazeElementBaseType.NONE;
 }

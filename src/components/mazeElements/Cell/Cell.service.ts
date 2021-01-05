@@ -1,8 +1,12 @@
 import UnidentifiedCellTypeError from '../../../errors/UnidentifiedCellTypeError';
-import { CellType } from '../../../types/models/Maze/Structure/Cell';
+import {
+  CellType,
+  IMazeElementType,
+  MazeElementBaseType,
+} from '../../../types/models/Maze/Structure/MazeElement';
 
 // eslint-disable-next-line import/prefer-default-export
-export function getCssClassNameFromCellType(type: CellType): string {
+export function getCssClassNameFromCellType(type: IMazeElementType): string {
   switch (type) {
     case CellType.ARSENAL:
       return 'cell-arsenal';
@@ -26,7 +30,7 @@ export function getCssClassNameFromCellType(type: CellType): string {
       return 'cell-pit-in';
     case CellType.PIT_OUT:
       return 'cell-pit-out';
-    case CellType.NONE:
+    case MazeElementBaseType.NONE:
       return 'cell-none';
     default:
       throw new UnidentifiedCellTypeError(type);

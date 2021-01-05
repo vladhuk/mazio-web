@@ -1,13 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import './Cell.scss';
-import ICell, { CellType } from '../../../types/models/Maze/Structure/Cell';
-import { ItemType } from '../../../constants';
 import MoveableMazeElement from '../MoveableMazeElement';
 import { getCssClassNameFromCellType } from './Cell.service';
 import MoveMazeElement from '../../../types/util/dnd/maze/MoveMazeElement';
+import { MazeDragItemType } from '../../../types/util/dnd/maze/MazeDragElement';
+import MazeElement, {
+  MazeElementBaseType,
+} from '../../../types/models/Maze/Structure/MazeElement';
 
 interface Props {
-  cell: ICell;
+  cell: MazeElement;
   moveCell?: MoveMazeElement;
 }
 
@@ -18,8 +20,8 @@ const Cell: FunctionComponent<Props> = ({ cell, moveCell }) => {
     <MoveableMazeElement
       className={`cell ${cellTypeClassName}`}
       element={cell}
-      dragItemType={ItemType.MAZE_CELL}
-      dragItemNoneTypes={[CellType.NONE]}
+      dragItemType={MazeDragItemType.CELL}
+      dragElementNoneTypes={[MazeElementBaseType.NONE]}
       moveElement={moveCell}
     />
   );
